@@ -3,10 +3,29 @@ from skorunkac.polls.models import Question, Media, Session, Poll, Category, Ans
 
 
 
-@admin.register(Category, Answer)
-class GenericAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('poll', 'session', 'question', 'answer',)
+    actions = ['download']
+    list_filter = ['poll__session', 'question', 'poll__gender', 'poll__education']
+
+    def poll(self, answer):
+        return answer.poll
+
+    def session(self, answer):
+        return answer.poll.session
+
+    def question(self, answer):
+        return answer.question
+
+    def download(self, qs):
+        for answer in qs:
+            pass
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
@@ -23,7 +42,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('session', 'started', 'ended', 'score', 'gender', 'age', 'education')
+    list_display = ('session', 'started', 'score', 'gender', 'age', 'education')
+    list_filter = ['session', 'started', 'gender', 'education']
 
 
 @admin.register(Media)
@@ -31,5 +51,5 @@ class MediaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'cats', 'active',)
     list_editable = ('active',)
 
-    def cats(self, obj):
-        return ', '.join(list(obj.categories.values_list('name', flat=True)))
+    def cats(self, media):
+        return ', '.join(list(media.categories.values_list('name', flat=True)))

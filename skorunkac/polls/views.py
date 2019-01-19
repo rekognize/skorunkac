@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.forms import ModelForm, formset_factory
+from django.forms import ModelForm
 from django.core.paginator import Paginator
 from django.db.models import Sum, Count, F
 from django.utils import timezone
@@ -84,8 +84,11 @@ def questions(request, poll_id, page_no):
                             'questions', poll.id, page.next_page_number()
                         )
                     else:
-                        print(page.has_next())
                         poll.ended = timezone.now()
+                        poll.score = round(
+                            100 * (poll.answer_set.aggregate(total_points=Sum('answer'))['total_points'] or 0) /
+                            Question.objects.filter(active=True).count() / MAX_POINTS_PER_QUESTION, 1
+                        )
                         poll.save()
                         return redirect(
                             'result', poll.id
@@ -109,10 +112,6 @@ MAX_POINTS_PER_QUESTION = 4
 
 def result(request, poll_id):
     poll = get_object_or_404(Poll, id=poll_id)
-    score = round(
-        100 * (poll.answer_set.aggregate(total_points=Sum('answer'))['total_points'] or 0) /
-        Question.objects.filter(active=True).count() / MAX_POINTS_PER_QUESTION, 1
-    )
     scores_by_category = Category.objects.annotate(
         total=Sum('question__answer__answer')
     ).annotate(
@@ -126,7 +125,7 @@ def result(request, poll_id):
         template_name='result.html',
         context={
             'poll': poll,
-            'score': score,
+            'score': poll.score,
             'scores_by_category': scores_by_category,
             'weakest_category': scores_by_category[len(scores_by_category)-1]
         }

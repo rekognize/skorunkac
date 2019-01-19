@@ -95,6 +95,9 @@ class Poll(models.Model):
     ended = models.DateTimeField(blank=True, null=True)
     score = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return str(self.id)
+
     class Meta:
         verbose_name = 'Anket'
         verbose_name_plural = 'Anketler'
