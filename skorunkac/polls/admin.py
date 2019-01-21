@@ -1,3 +1,6 @@
+import csv
+from io import StringIO
+from django.http import HttpResponse
 from django.contrib import admin
 from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer
 
@@ -23,9 +26,19 @@ class AnswerAdmin(admin.ModelAdmin):
     def question(self, answer):
         return answer.question
 
-    def download(self, qs):
+    def download(self, request, qs):
+        f = StringIO()
+        writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for answer in qs:
-            pass
+            writer.writerow([answer.poll.session, answer.poll, answer.question, answer.answer])
+        f.seek(0)
+        response = HttpResponse(
+            f.read(),
+            content_type='text/csv'
+        )
+        response['Content-Disposition'] = 'attachment; filename="cevaplar.csv"'
+        return response
+
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
