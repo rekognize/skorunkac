@@ -66,3 +66,4 @@ class MediaAdmin(admin.ModelAdmin):
 
     def cats(self, media):
         return ', '.join(list(media.categories.values_list('name', flat=True)))
+    cats.short_description = 'kategoriler'

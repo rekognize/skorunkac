@@ -8,7 +8,7 @@ admin.site.site_title = 'Skorun Kaç?'
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('yonetim/', admin.site.urls),
 
     path('', views.select_session, name='select_session'),
     path('<int:poll_id>/', views.result, name='result'),
