@@ -16,10 +16,10 @@
         <div class="row">
 
             <table>
-            {% for cat in scores_by_category %}
+            {% for cat, scores in scores_by_category %}
                 <tr>
                     <td>{{ cat.name }}</td>
-                    <td>{{ cat.score }}</td>
+                    <td>{{ scores.score }}</td>
                 </tr>
             {% endfor %}
             </table>
@@ -28,10 +28,18 @@
 
         <div class="row">
 
-            <p class="display-4 mt-10">En zayif kategori: </p>
-            <p class="display-4 mt-10">
-                {{ weakest_category }}
-            </p>
+            {% if weakest_category.score > 90 %}
+
+                <p class="display-4 mt-10">Tebrikler, tüm kategorilerden yüksek puan aldınız!</p>
+
+            {% else %}
+
+                <p class="display-4 mt-10">En zayıf kategori: </p>
+                <p class="display-4 mt-10">
+                    {{ weakest_category.0.name }}
+                </p>
+
+            {% endif %}
 
         </div>
 
@@ -41,10 +49,13 @@
 
         <div class="row">
 
-        {% for media in weakest_category.media_set.all %}
+        {% for media in weakest_category.0.media_set.all %}
             <div class="col">
                 <iframe width="100%" height="315" src="{{ media.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="w-100"></div>
+            {% endif %}
         {% endfor %}
         </div>
 

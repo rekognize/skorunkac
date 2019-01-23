@@ -48,7 +48,7 @@ class Media(models.Model):
             params = parse_qs(parts.query)
             v = params.get('v')
             if v:
-                self.url = f"http://youtube.com/embed/{v[0]}"
+                self.url = f"https://youtube.com/embed/{v[0]}"
             else:
                 raise ValidationError('Youtube adresi geçersiz')
 

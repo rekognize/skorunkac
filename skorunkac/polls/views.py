@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 from django.core.paginator import Paginator
-from django.db.models import Sum, Count, F
+from django.db.models import Sum, Count, F, Q
 from django.utils import timezone
 from skorunkac.polls.models import Session, Question, Answer, Poll, Category
 
@@ -112,13 +112,24 @@ MAX_POINTS_PER_QUESTION = 4
 
 def result(request, poll_id):
     poll = get_object_or_404(Poll, id=poll_id)
-    scores_by_category = Category.objects.annotate(
-        total=Sum('question__answer__answer')
-    ).annotate(
-        question_count=Count('question')
-    ).annotate(
-        score=100.0 * F('total') / F('question_count') / MAX_POINTS_PER_QUESTION
-    ).exclude(question_count=0).order_by('-score')
+    scores_by_category = {}
+    answers = poll.answer_set.all()
+    for question in Question.objects.filter(active=True):
+        category = question.category
+        answer = answers.filter(question=question, poll=poll).first()
+        points = answer and answer.answer or 0
+        if category in scores_by_category:
+            scores_by_category[category]['question_count'] += 1
+            scores_by_category[category]['total_points'] += points
+        else:
+            scores_by_category[category] = {
+                'question_count': 1,
+                'total_points': points
+            }
+    for cat, val in scores_by_category.items():
+        scores_by_category[cat]['score'] = 100 / MAX_POINTS_PER_QUESTION * scores_by_category[cat]['total_points'] / \
+                                           scores_by_category[cat]['question_count']
+    scores_by_category = sorted(scores_by_category.items(), key=lambda x: x[1]['score'], reverse=True)
 
     return render(
         request,
