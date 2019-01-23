@@ -4,12 +4,16 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container mt-4">
 
         <div class="row">
 
-            <p class="display-4 mt-10">Sonuc: </p>
-            <p class="display-4 mt-10">{{ score }}</p>
+            <h2>
+                Skor:
+                <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
+                    {{ score }}
+                </span>
+            </h2>
 
         </div>
 
@@ -17,34 +21,38 @@
 
             <table>
             {% for cat, scores in scores_by_category %}
-                <tr>
+                {% with scores.score as score %}
+                <tr class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
                     <td>{{ cat.name }}</td>
-                    <td>{{ scores.score }}</td>
+                    <td>{{ score }}</td>
                 </tr>
+                {% endwith %}
             {% endfor %}
             </table>
 
         </div>
 
-        <div class="row">
+        <div class="row mt-4">
 
-            {% if weakest_category.score > 90 %}
+            {% if weakest_category.1.score > 90 %}
 
-                <p class="display-4 mt-10">Tebrikler, tüm kategorilerden yüksek puan aldınız!</p>
+                <h3>Tebrikler, tüm kategorilerden yüksek puan aldınız!</h3>
 
             {% else %}
 
-                <p class="display-4 mt-10">En zayıf kategori: </p>
-                <p class="display-4 mt-10">
+                <h3>
+                    En zayıf kategori:
                     {{ weakest_category.0.name }}
-                </p>
+                </h3>
 
             {% endif %}
 
         </div>
 
-        <div class="row">
-            <p class="display-4 mt-10">Kaynak onerileri</p>
+        {% if weakest_category.1.score <= 90 %}
+
+        <div class="row mt-4">
+            <h3>{{ weakest_category.0.name }} ile ilgili kaynak onerileri</h3>
         </div>
 
         <div class="row">
@@ -60,8 +68,12 @@
         </div>
 
         <div class="row">
-            <a href="{% url 'init_poll' session_slug=poll.session.slug %}">Tekrar basla</a>
+            <p class="mt-4">
+                <a href="{% url 'init_poll' session_slug=poll.session.slug %}" class="btn btn-primary">Tekrar basla</a>
+            </p>
         </div>
+
+        {% endif %}
 
     </div>
 
