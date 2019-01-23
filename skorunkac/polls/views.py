@@ -127,8 +127,11 @@ def result(request, poll_id):
                 'total_points': points
             }
     for cat, val in scores_by_category.items():
-        scores_by_category[cat]['score'] = 100 / MAX_POINTS_PER_QUESTION * scores_by_category[cat]['total_points'] / \
-                                           scores_by_category[cat]['question_count']
+        scores_by_category[cat]['score'] = round(
+            100 / MAX_POINTS_PER_QUESTION * scores_by_category[cat]['total_points'] /
+            scores_by_category[cat]['question_count'],
+            1
+        )
     scores_by_category = sorted(scores_by_category.items(), key=lambda x: x[1]['score'], reverse=True)
 
     return render(

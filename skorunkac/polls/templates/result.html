@@ -9,7 +9,7 @@
         <div class="row">
 
             <h2>
-                Skor:
+                Skorun
                 <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
                     {{ score }}
                 </span>
@@ -24,7 +24,7 @@
                 {% with scores.score as score %}
                 <tr class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
                     <td>{{ cat.name }}</td>
-                    <td>{{ score }}</td>
+                    <td class="text-right">{{ score }}</td>
                 </tr>
                 {% endwith %}
             {% endfor %}
@@ -41,8 +41,14 @@
             {% else %}
 
                 <h3>
-                    En zayıf kategori:
-                    {{ weakest_category.0.name }}
+                    En zayıf olduğun kategori
+                    <em>{{ weakest_category.0.name }}</em>;
+                    skorun
+                    {% with weakest_category.1.score as score %}
+                    <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
+                        {{ score }}
+                    </span>
+                    {% endwith %}
                 </h3>
 
             {% endif %}
