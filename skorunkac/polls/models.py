@@ -1,3 +1,4 @@
+from urllib.parse import urlparse, parse_qs
 from django.db import models
 from django.urls import reverse
 from django.core.exceptions import ValidationError
@@ -42,6 +43,14 @@ class Media(models.Model):
     def clean(self):
         if not [bool(self.content), bool(self.url)].count(True) == 1:
             raise ValidationError('URL ya da icerik alanlari doldurulmali')
+        if self.url and 'youtube.com' in self.url and 'watch?v=' in self.url:
+            parts = urlparse(self.url)
+            params = parse_qs(parts.query)
+            v = params.get('v')
+            if v:
+                self.url = f"http://youtube.com/embed/{v[0]}"
+            else:
+                raise ValidationError('Youtube adresi geçersiz')
 
     class Meta:
         verbose_name = 'medya'
