@@ -57,7 +57,7 @@ class AnswerForm(ModelForm):
         fields = ['answer']
 
 
-QUESTIONS_PER_PAGE = 2
+QUESTIONS_PER_PAGE = 4
 
 
 def questions(request, poll_id, page_no):

@@ -84,8 +84,8 @@ class Poll(models.Model):
         choices=(
             ('m', 'erkek'),
             ('f', 'kadın'),
-            ('qm', 'kuir erkek'),
-            ('qf', 'kuir kadın'),
+            ('qm', 'LGBTI erkek'),
+            ('qf', 'LGBTI kadın'),
         ),
     )
     age = models.PositiveSmallIntegerField('yaş', blank=True, null=True)
@@ -100,6 +100,17 @@ class Poll(models.Model):
             (3, 'üniversite'),
             (4, 'yüksek lisans'),
             (5, 'doktora'),
+        ),
+    )
+    lifestyle = models.CharField(
+        'hayat tarzı',
+        max_length=1,
+        blank=True,
+        null=True,
+        choices=(
+            ('m', 'modern'),
+            ('g', 'geleneksel muhafazakar'),
+            ('d', 'dindar muhafazakar'),
         ),
     )
     started = models.DateTimeField('başlangıç', auto_now_add=True)
