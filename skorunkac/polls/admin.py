@@ -15,7 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('poll', 'session', 'question', 'answer',)
     actions = ['download']
-    list_filter = ['poll__session', 'question', 'poll__gender', 'poll__education', 'poll__lifestyle']
+    list_filter = ['poll__session', 'poll__gender', 'poll__education', 'poll__lifestyle', 'question']
 
     def poll(self, answer):
         return answer.poll

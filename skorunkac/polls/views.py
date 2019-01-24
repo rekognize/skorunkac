@@ -79,20 +79,21 @@ def questions(request, poll_id, page_no):
                         question=question,
                         answer=answer,
                     )
-                    if page.has_next():
-                        return redirect(
-                            'questions', poll.id, page.next_page_number()
-                        )
-                    else:
-                        poll.ended = timezone.now()
-                        poll.score = round(
-                            100 * (poll.answer_set.aggregate(total_points=Sum('answer'))['total_points'] or 0) /
-                            Question.objects.filter(active=True).count() / MAX_POINTS_PER_QUESTION, 1
-                        )
-                        poll.save()
-                        return redirect(
-                            'result', poll.id
-                        )
+
+        if page.has_next():
+            return redirect(
+                'questions', poll.id, page.next_page_number()
+            )
+        else:
+            poll.ended = timezone.now()
+            poll.score = round(
+                100 * (poll.answer_set.aggregate(total_points=Sum('answer'))['total_points'] or 0) /
+                Question.objects.filter(active=True).count() / MAX_POINTS_PER_QUESTION, 1
+            )
+            poll.save()
+            return redirect(
+                'result', poll.id
+            )
 
     return render(
         request,
