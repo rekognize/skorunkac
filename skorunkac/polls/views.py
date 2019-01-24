@@ -25,7 +25,7 @@ def select_session(request):
 class PollForm(ModelForm):
     class Meta:
         model = Poll
-        fields = ['gender', 'age', 'education']
+        fields = ['gender', 'age', 'education', 'lifestyle']
 
 
 def init_poll(request, session_slug):
