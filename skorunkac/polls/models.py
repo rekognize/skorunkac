@@ -17,6 +17,7 @@ class Category(models.Model):
 
 class Question(models.Model):
     question = models.CharField('soru', max_length=250)
+    question_f = models.CharField('soru (kadın versiyonu)', blank=True, null=True, max_length=250)
     category = models.ForeignKey(Category, verbose_name='kategori', blank=True, null=True, on_delete=models.SET_NULL)
     order = models.PositiveSmallIntegerField('sıralama', blank=True, null=True)
     active = models.BooleanField('yayında', default=True)

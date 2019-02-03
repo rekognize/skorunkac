@@ -30,7 +30,15 @@
 
                     <div class="row mb-4">
 
-                        {{ question }}
+                        {% if poll.gender == 'f' and question.question_f %}
+
+                            {{ question.question_f }}
+
+                        {% else %}
+
+                            {{ question.question }}
+
+                        {% endif %}
 
                     </div>
 

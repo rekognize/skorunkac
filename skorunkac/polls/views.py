@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.core.paginator import Paginator
 from django.db.models import Sum, Count, F, Q
 from django.utils import timezone
+from django.conf import settings
 from skorunkac.polls.models import Session, Question, Answer, Poll, Category
 
 
@@ -57,13 +58,10 @@ class AnswerForm(ModelForm):
         fields = ['answer']
 
 
-QUESTIONS_PER_PAGE = 4
-
-
 def questions(request, poll_id, page_no):
     poll = get_object_or_404(Poll, id=poll_id)
     questions = Question.objects.filter(active=True)
-    p = Paginator(questions, QUESTIONS_PER_PAGE)
+    p = Paginator(questions, settings.QUESTIONS_PER_PAGE)
     page = p.page(page_no)
 
     if request.method == 'POST':
