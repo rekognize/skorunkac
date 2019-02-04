@@ -16,4 +16,5 @@ urlpatterns = [
     path('<int:poll_id>/', views.result, name='result'),
     path('<slug:session_slug>/', views.init_poll, name='init_poll'),
     path('<int:poll_id>/<int:page_no>/', views.questions, name='questions'),
+    path('<int:poll_id>/kaynak/', views.suggest, name='suggest'),
 ]

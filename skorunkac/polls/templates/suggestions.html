@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <div class="container mt-4">
+
+        <div class="row mt-4 mb-4">
+            <p class="display-4"><strong>{{ weakest_category.0.name }}</strong> konusundaki kaynak önerilerimiz</p>
+        </div>
+
+        <div class="row">
+
+        {% for media in weakest_category.0.media_set.all %}
+            <div class="col">
+                <iframe width="100%" height="315" src="{{ media.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="w-100"></div>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+        <div class="row">
+            <p class="mt-4">
+                <a href="{% url 'init_poll' session_slug=poll.session.slug %}" class="btn btn-lg btn-primary">Tekrar başla</a>
+
+                <a href="{% url 'result' poll_id=poll.id %}" class="btn btn-lg btn-primary ml-4">Skor sayfasına dön</a>
+            </p>
+        </div>
+
+    </div>
+
+{% endblock %}

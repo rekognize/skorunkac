@@ -114,9 +114,9 @@ class Poll(models.Model):
             ('d', 'dindar muhafazakar'),
         ),
     )
-    started = models.DateTimeField('başlangıç', auto_now_add=True)
-    ended = models.DateTimeField('bitiş', blank=True, null=True)
-    score = models.FloatField('skor', blank=True, null=True)
+    started = models.DateTimeField('başlangıç', auto_now_add=True, editable=False)
+    ended = models.DateTimeField('bitiş', blank=True, null=True, editable=False)
+    score = models.FloatField('skor', blank=True, null=True, editable=False)
 
     def __str__(self):
         return str(self.id)

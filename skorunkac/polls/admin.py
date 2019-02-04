@@ -55,7 +55,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('session', 'started', 'score', 'gender', 'age', 'education', 'lifestyle')
+    list_display = ('session', 'started', 'ended', 'score', 'gender', 'age', 'education', 'lifestyle')
     list_filter = ['session', 'started', 'gender', 'education', 'lifestyle']
 
 

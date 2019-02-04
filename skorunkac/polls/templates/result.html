@@ -8,16 +8,42 @@
 
         <div class="row">
 
-            <h2>
-                Skorun
+            <h2 class="mb-4">
+                <small>Testi tamamladık, katıldığın için teşekkürler!</small>
+                <br>
+                Toplumsal cinsiyet eşitliği skorun:
                 <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
                     {{ score }}
                 </span>
             </h2>
 
+            <div class="w-100"></div>
+
+            <p>
+                Bugün <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score_today.count }}</strong> kişinin ortalaması <strong>{{ session_score_today.avg|floatformat:1 }}</strong>
+            </p>
+
+            <div class="w-100"></div>
+
+            <p>
+                Tüm zamanlarda <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score.count }}</strong> kişinin ortalaması <strong>{{ session_score.avg|floatformat:1 }}</strong>
+            </p>
+
+            <div class="w-100"></div>
+
+            <p>
+                Şimdiye kadar ankete katılan <strong>{{ global_score.count }}</strong> kişinin ortalaması <strong>{{ global_score.avg|floatformat:1 }}</strong>
+            </p>
+
         </div>
 
         <div class="row">
+
+            <h3 class="mt-4">
+                Kategorilere göre skorun:
+            </h3>
+
+            <div class="w-100"></div>
 
             <table>
             {% for cat, scores in scores_by_category %}
@@ -43,7 +69,7 @@
                 <h3>
                     En zayıf olduğun kategori
                     <em>{{ weakest_category.0.name }}</em>;
-                    skorun
+                    bu kategorideki skorun
                     {% with weakest_category.1.score as score %}
                     <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
                         {{ score }}
@@ -51,35 +77,21 @@
                     {% endwith %}
                 </h3>
 
+                <div class="w-100 mt-4"></div>
+
+                <p class="display-4">
+                    <strong>{{ weakest_category.0.name }}</strong> konusunda kendini geliştirmek için derlediğimiz kaynaklara göz atmak ister misin?
+                </p>
+
+                <div class="w-100 mt-4"></div>
+
+                <a href="{% url 'suggest' poll_id=poll.id %}" class="btn btn-lg btn-primary">Kaynakları göster</a>
+
+                <a href="{% url 'init_poll' session_slug=poll.session.slug %}" class="btn btn-lg btn-primary ml-4">Tekrar basla</a>
+
             {% endif %}
 
         </div>
-
-        {% if weakest_category.1.score <= 90 %}
-
-        <div class="row mt-4">
-            <h3>{{ weakest_category.0.name }} ile ilgili kaynak önerilerimiz</h3>
-        </div>
-
-        <div class="row">
-
-        {% for media in weakest_category.0.media_set.all %}
-            <div class="col">
-                <iframe width="100%" height="315" src="{{ media.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            {% if forloop.counter|divisibleby:2 %}
-                <div class="w-100"></div>
-            {% endif %}
-        {% endfor %}
-        </div>
-
-        <div class="row">
-            <p class="mt-4">
-                <a href="{% url 'init_poll' session_slug=poll.session.slug %}" class="btn btn-primary">Tekrar basla</a>
-            </p>
-        </div>
-
-        {% endif %}
 
     </div>
 
