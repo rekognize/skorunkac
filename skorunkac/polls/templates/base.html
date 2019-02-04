@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head lang="tr">
@@ -16,11 +17,13 @@
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/" style="font-family: 'Cutive Mono', monospace; font-weight: 900">
-      <h2>Skorun Kaç?</h2>
-  </a>
-</nav>
+<div class="text-center mt-4">
+
+<a href="/" style="font-family: 'Cutive Mono', monospace; font-weight: 900">
+    <img src="{% static 'logo.png' %}" width="10%">
+</a>
+
+</div>
 
 
 {% block content %}
