@@ -61,6 +61,29 @@ class Media(models.Model):
 class Session(models.Model):
     name = models.CharField('oturum', max_length=100)
     slug = models.SlugField('bağlantı adı')
+    type = models.CharField(
+        'oturum tipi',
+        max_length=4,
+        blank=True, null=True,
+        choices=(
+            ('p', 'panel'),
+            ('s', 'söyleşi'),
+            ('t', 'tanıtım toplantısı'),
+        )
+    )
+    institution_type = models.CharField(
+        'oturum sahibi',
+        max_length=4,
+        blank=True, null=True,
+        choices=(
+            ('ö', 'özel şirket'),
+            ('s', 'sivil toplum örgütü'),
+            ('k', 'kamu kuruluşu'),
+        )
+    )
+    attendee_count = models.PositiveIntegerField('katılımcı sayısı', blank=True, null=True)
+    woman_ratio = models.PositiveSmallIntegerField('kadın katılımcı oranı', blank=True, null=True)
+    notes = models.TextField('notlar', blank=True, null=True)
     created = models.DateTimeField('eklenme tarihi', auto_now_add=True)
     active = models.BooleanField('yayında', default=True)
 
