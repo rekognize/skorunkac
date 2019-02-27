@@ -27,7 +27,7 @@ def select_session(request):
 class PollForm(ModelForm):
     class Meta:
         model = Poll
-        fields = ['gender', 'age', 'education', 'lifestyle']
+        fields = ['gender', 'age', 'education', 'marital_status', 'hometown_size']
 
 
 def init_poll(request, session_slug):
@@ -62,7 +62,7 @@ class AnswerForm(ModelForm):
 def questions(request, poll_id, page_no):
     poll = get_object_or_404(Poll, id=poll_id)
     questions = Question.objects.filter(active=True)
-    p = Paginator(questions, settings.QUESTIONS_PER_PAGE)
+    p = Paginator(questions, settings.POLL_SETTINGS['QUESTIONS_PER_PAGE'])
     page = p.page(page_no)
 
     if request.method == 'POST':
@@ -87,9 +87,17 @@ def questions(request, poll_id, page_no):
             )
         else:
             poll.ended = timezone.now()
+            score = poll.answer_set.filter(
+                question__inverse_score=False
+            ).aggregate(total_points=Sum('answer'))['total_points'] or 0
+            inverse_score = poll.answer_set.filter(
+                question__inverse_score=True
+            ).aggregate(total_points=Sum('answer'))['total_points'] or 0
+            question_count = Question.objects.filter(active=True).count()
+            inverse_question_count = Question.objects.filter(active=True).filter(inverse_score=True).count()
             poll.score = round(
-                100 * (poll.answer_set.aggregate(total_points=Sum('answer'))['total_points'] or 0) /
-                Question.objects.filter(active=True).count() / MAX_POINTS_PER_QUESTION, 1
+                100 * (score + (settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * inverse_question_count - inverse_score)) /
+                question_count / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'], 1
             )
             poll.save()
             return redirect(
@@ -109,9 +117,6 @@ def questions(request, poll_id, page_no):
     )
 
 
-MAX_POINTS_PER_QUESTION = 4
-
-
 def result(request, poll_id):
     poll = get_object_or_404(Poll, id=poll_id)
     scores_by_category = {}
@@ -119,7 +124,11 @@ def result(request, poll_id):
     for question in Question.objects.filter(active=True):
         category = question.category
         answer = answers.filter(question=question, poll=poll).first()
-        points = answer and answer.answer or 0
+        points = 0
+        if answer:
+            points = answer.answer
+            if answer.question.inverse_score:
+                points = settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] - answer.answer
         if category in scores_by_category:
             scores_by_category[category]['question_count'] += 1
             scores_by_category[category]['total_points'] += points
@@ -130,7 +139,7 @@ def result(request, poll_id):
             }
     for cat, val in scores_by_category.items():
         scores_by_category[cat]['score'] = round(
-            100 / MAX_POINTS_PER_QUESTION * scores_by_category[cat]['total_points'] /
+            100 / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * scores_by_category[cat]['total_points'] /
             scores_by_category[cat]['question_count'],
             1
         )
@@ -158,6 +167,7 @@ def result(request, poll_id):
             'session_score': session_score,
             'session_score_today': session_score_today,
             'global_score': global_score,
+            'poll_settings': settings.POLL_SETTINGS,
         }
     )
 
@@ -180,7 +190,7 @@ def suggest(request, poll_id):
             }
     for cat, val in scores_by_category.items():
         scores_by_category[cat]['score'] = round(
-            100 / MAX_POINTS_PER_QUESTION * scores_by_category[cat]['total_points'] /
+            100 / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * scores_by_category[cat]['total_points'] /
             scores_by_category[cat]['question_count'],
             1
         )
@@ -191,6 +201,8 @@ def suggest(request, poll_id):
         template_name='suggestions.html',
         context={
             'poll': poll,
+            'strongest_category': scores_by_category[0],
             'weakest_category': scores_by_category[len(scores_by_category)-1],
+            'poll_settings': settings.POLL_SETTINGS,
         }
     )

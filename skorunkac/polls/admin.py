@@ -49,8 +49,8 @@ class SessionAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question', 'question_f', 'category', 'order', 'active',)
-    list_editable = ('category', 'order', 'active', 'question_f')
+    list_display = ('question', 'question_f', 'inverse_score', 'category', 'order', 'active',)
+    list_editable = ('category', 'order', 'active', 'question_f', 'inverse_score')
 
 
 @admin.register(Poll)

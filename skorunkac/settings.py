@@ -128,4 +128,21 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 
-QUESTIONS_PER_PAGE = 5
+POLL_SETTINGS = {
+    'MAX_POINTS_PER_QUESTION': 4,
+    'QUESTIONS_PER_PAGE': 5,
+    'DISPLAY_AVERAGE_TOTAL_THRESHOLD': 300,
+    'DISPLAY_AVERAGE_SESSION_THRESHOLD': 10,
+    'DISPLAY_AVERAGE_SESSION_TODAY_THRESHOLD': 3,
+    'AGE_GROUPS': [
+        (15, 18),
+        (19, 25),
+        (25, 35),
+        (36, 50),
+        (50, 65),
+        (66, 75),
+        (76, ),
+    ],
+    'SUCCESS_SCORE': 80,
+    'FAIL_SCORE': 50,
+}

@@ -20,6 +20,7 @@ class Question(models.Model):
     question_f = models.CharField('soru (kadın versiyonu)', blank=True, null=True, max_length=250)
     category = models.ForeignKey(Category, verbose_name='kategori', blank=True, null=True, on_delete=models.SET_NULL)
     order = models.PositiveSmallIntegerField('sıralama', blank=True, null=True)
+    inverse_score = models.BooleanField('ters skor', default=False)
     active = models.BooleanField('yayında', default=True)
 
     def __str__(self):
@@ -102,28 +103,48 @@ class Poll(models.Model):
     session = models.ForeignKey(Session, verbose_name='oturum', blank=True, null=True, on_delete=models.SET_NULL)
     gender = models.CharField(
         'cinsiyet',
-        max_length=2,
-        blank=True,
-        null=True,
+        max_length=1, blank=True, null=True,
         choices=(
             ('m', 'erkek'),
             ('f', 'kadın'),
-            ('qm', 'LGBTI erkek'),
-            ('qf', 'LGBTI kadın'),
+            ('g', 'LGBTI erkek'),
+            ('l', 'LGBTI kadın'),
         ),
     )
     age = models.PositiveSmallIntegerField('yaş', blank=True, null=True)
     education = models.PositiveSmallIntegerField(
         'eğitim durumu',
-        blank=True,
-        null=True,
+        blank=True, null=True,
         choices=(
-            (0, 'yok'),
-            (1, 'ilk öğrenim'),
-            (2, 'lise'),
-            (3, 'üniversite'),
-            (4, 'yüksek lisans'),
-            (5, 'doktora'),
+            (0, 'Diplomasız okur'),
+            (1, 'İlkokul mezunu'),
+            (2, 'İlköğretim / Ortaokul mezunu'),
+            (3, 'Lise mezunu'),
+            (4, 'Yüksekokul mezunu'),
+            (5, 'Lisans mezunu'),
+            (6, 'Yüksek lisans'),
+            (7, 'Doktora'),
+        ),
+    )
+    marital_status = models.CharField(
+        'medeni durum',
+        max_length=1, blank=True, null=True,
+        choices=(
+            ('b', 'Bekar'),
+            ('s', 'Sözlü / Nişanlı'),
+            ('e', 'Evli'),
+            ('d', 'Dul'),
+            ('a', 'Boşanmış'),
+        ),
+    )
+    hometown_size = models.CharField(
+        'büyüdüğünüz yer',
+        max_length=1, blank=True, null=True,
+        choices=(
+            ('k', 'Köy'),
+            ('i', 'Kasaba / İlçe'),
+            ('s', 'Şehir'),
+            ('m', 'Büyükşehir / Metropol'),
         ),
     )
     lifestyle = models.CharField(

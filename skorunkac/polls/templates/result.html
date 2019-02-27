@@ -12,28 +12,35 @@
                 <small>Testi tamamladık, katıldığın için teşekkürler!</small>
                 <br>
                 Toplumsal cinsiyet eşitliği skorun:
-                <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
-                    {{ score }}
+                <span class="text-{% if poll.score >= poll_settings.SUCCESS_SCORE %}success{% elif poll.score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
+                    {{ poll.score }}
                 </span>
             </h2>
 
             <div class="w-100"></div>
 
+            {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_TODAY_THRESHOLD %}
             <p>
                 Bugün <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score_today.count }}</strong> kişinin ortalaması <strong>{{ session_score_today.avg|floatformat:1 }}</strong>
             </p>
-
             <div class="w-100"></div>
+            {% endif %}
 
+
+            {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_THRESHOLD %}
             <p>
                 Tüm zamanlarda <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score.count }}</strong> kişinin ortalaması <strong>{{ session_score.avg|floatformat:1 }}</strong>
             </p>
-
             <div class="w-100"></div>
+            {% endif %}
 
+
+            {% if global_score.count >= poll_settings.DISPLAY_AVERAGE_TOTAL_THRESHOLD %}
             <p>
                 Şimdiye kadar ankete katılan <strong>{{ global_score.count }}</strong> kişinin ortalaması <strong>{{ global_score.avg|floatformat:1 }}</strong>
             </p>
+            <div class="w-100"></div>
+            {% endif %}
 
         </div>
 
@@ -48,7 +55,7 @@
             <table>
             {% for cat, scores in scores_by_category %}
                 {% with scores.score as score %}
-                <tr class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
+                <tr class="text-{% if score >= poll_settings.SUCCESS_SCORE %}success{% elif score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
                     <td>{{ cat.name }}</td>
                     <td class="text-right">{{ score }}</td>
                 </tr>
@@ -60,9 +67,9 @@
 
         <div class="row mt-4">
 
-            {% if weakest_category.1.score > 90 %}
+            {% if weakest_category.1.score > poll_settings.SUCCESS_SCORE %}
 
-                <h3>Tebrikler, tüm kategorilerden yüksek puan aldınız!</h3>
+                <h3>Tebrikler, tüm kategorilerden yüksek puan aldın!</h3>
 
             {% else %}
 
@@ -71,7 +78,7 @@
                     <em>{{ weakest_category.0.name }}</em>;
                     bu kategorideki skorun
                     {% with weakest_category.1.score as score %}
-                    <span class="text-{% if score >= 80 %}success{% elif score >= 50 %}warning{% else %}danger{% endif %}">
+                    <span class="text-{% if score >= poll_settings.SUCCESS_SCORE %}success{% elif score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
                         {{ score }}
                     </span>
                     {% endwith %}
