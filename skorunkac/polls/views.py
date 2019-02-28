@@ -164,6 +164,7 @@ def result(request, poll_id):
             'poll': poll,
             'score': poll.score,
             'scores_by_category': scores_by_category,
+            'strongest_category': scores_by_category[0],
             'weakest_category': scores_by_category[len(scores_by_category)-1],
             'session_score': session_score,
             'session_score_today': session_score_today,

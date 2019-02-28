@@ -2,6 +2,7 @@ from urllib.parse import urlparse, parse_qs
 from django.db import models
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from skorunkac.cities.models import City
 
 
 class Category(models.Model):
@@ -20,6 +21,10 @@ class QuestionSource(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'kaynak'
+        verbose_name_plural = 'kaynaklar'
 
 
 class Question(models.Model):
@@ -68,7 +73,7 @@ class Media(models.Model):
 
 
 class Session(models.Model):
-    name = models.CharField('oturum', max_length=100)
+    name = models.CharField('oturum adı', max_length=100)
     slug = models.SlugField('bağlantı adı')
     type = models.CharField(
         'oturum tipi',
@@ -90,8 +95,12 @@ class Session(models.Model):
             ('k', 'kamu kuruluşu'),
         )
     )
-    attendee_count = models.PositiveIntegerField('katılımcı sayısı', blank=True, null=True)
-    woman_ratio = models.PositiveSmallIntegerField('kadın katılımcı oranı', blank=True, null=True)
+    employee_count = models.PositiveIntegerField('kurum çalışan sayısı', blank=True, null=True)
+    woman_employee_count = models.PositiveIntegerField('kurum kadın çalışan sayısı', blank=True, null=True)
+    attendee_count = models.PositiveIntegerField('etkinlik katılımcı sayısı', blank=True, null=True)
+    woman_attendee_count = models.PositiveIntegerField('etkinlik kadın katılımcı sayısı', blank=True, null=True)
+    city = models.ForeignKey(City, verbose_name='il', blank=True, null=True, on_delete=models.SET_NULL)
+    location = models.CharField('yer', max_length=200, blank=True, null=True)
     notes = models.TextField('notlar', blank=True, null=True)
     created = models.DateTimeField('eklenme tarihi', auto_now_add=True)
     active = models.BooleanField('yayında', default=True)

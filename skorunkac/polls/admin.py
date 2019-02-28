@@ -3,6 +3,7 @@ from io import StringIO
 from django.http import HttpResponse
 from django.contrib import admin
 from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer, QuestionSource
+from skorunkac.cities.models import City, District
 
 
 

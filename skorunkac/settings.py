@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
 
+    'skorunkac.cities.apps.CitiesConfig',
     'skorunkac.polls.apps.PollsConfig',
 ]
 

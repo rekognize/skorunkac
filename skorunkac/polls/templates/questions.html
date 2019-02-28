@@ -6,71 +6,93 @@
 
     <div class="container">
 
-        <div class="row">
+        {% if page_no == 1 %}
 
-            <form method="post" id="qForm" class="w-100">
+            <div class="row mb-4">
 
-                {% csrf_token %}
+                <h3 class="mt-4">
+                    Artık başlayabiliriz!
+                </h3>
 
-                {% for question in page.object_list %}
+                <p class="lead">
+                    Sana Toplumsal Cinsiyet Eşitliği konusunda 20 farklı görüş sunuyoruz.
+                    Lütfen her birine ne ölçüde katıldığını ya da katılmadığını, ölçekteki düğmeyi sağa sola kaydırarak
+                    belirt.
+                    Ölçeğin en solu, görüşe “hiç katılmadığını” en sağı ise “kesinlikle katıldığını” gösterir.
+                </p>
+            </div>
 
-                    <div class="row mb-4">
+        {% endif %}
 
-                        {% if poll.gender == 'f' and question.question_f %}
+        <p class="mt-4">
+            <br>
+        </p>
 
-                            {{ question.question_f }}
+        <form method="post" id="qForm" class="w-100">
 
-                        {% else %}
+            {% csrf_token %}
 
-                            {{ question.question }}
+            {% for question in page.object_list %}
 
-                        {% endif %}
+                <div class="row mb-0">
 
-                    </div>
+                    <p class="lead">
 
-                    <input type="text" class="slider" name="{{ question.id }}" value="{% widthratio poll_settings.ANSWER_STEPS 2 1 %}" />
+                    {% if poll.gender == 'f' and question.question_f %}
 
-                    <div class="row mb-5 w-100">
-                    {% comment %}
-                        <div class="btn-group btn-group-toggle d-flex w-100 justify-content-center" data-toggle="buttons">
+                        {{ question.question_f }}
 
-                            {% for value, text in answer_form.answer.field.choices %}
+                    {% else %}
 
-                            <label class="btn btn-outline-info w-100 align-items-center justify-content-center">
-                                <input type="radio" name="{{ question.id }}" value="{{ value }}" autocomplete="off">
-                                <div class="mt-2 mb-2">
-                                    {{ text }}
-                                </div>
-                            </label>
+                        {{ question.question }}
 
-                            {% endfor %}
+                    {% endif %}
 
-                        </div>
-                    {% endcomment %}
-                    </div>
-
-                {% endfor %}
-
-                <button type="submit" id="x" class="btn btn-primary btn-lg float-right">Ileri</button>
-
-                <div class="row">
-
-                    {% with ''|center:paginator.num_pages as range %}
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                        {% for _ in range %}
-                            <li class="page-item {% if forloop.counter == page_no %}active{% else %}disabled{% endif %}"><a class="page-link">{{ forloop.counter }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    </nav>
-                    {% endwith %}
-
+                    </p>
 
                 </div>
 
-            </form>
+                <input type="text" class="slider" name="{{ question.id }}" value="{% widthratio poll_settings.ANSWER_STEPS 2 1 %}" />
 
-         </div>
+                <div class="row mb-5 w-100">
+                {% comment %}
+                    <div class="btn-group btn-group-toggle d-flex w-100 justify-content-center" data-toggle="buttons">
+
+                        {% for value, text in answer_form.answer.field.choices %}
+
+                        <label class="btn btn-outline-info w-100 align-items-center justify-content-center">
+                            <input type="radio" name="{{ question.id }}" value="{{ value }}" autocomplete="off">
+                            <div class="mt-2 mb-2">
+                                {{ text }}
+                            </div>
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+                {% endcomment %}
+                </div>
+
+            {% endfor %}
+
+            <button type="submit" id="x" class="btn btn-primary btn-lg float-right">Ileri</button>
+
+            <div class="row">
+
+                {% with ''|center:paginator.num_pages as range %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                    {% for _ in range %}
+                        <li class="page-item {% if forloop.counter == page_no %}active{% else %}disabled{% endif %}"><a class="page-link">{{ forloop.counter }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </nav>
+                {% endwith %}
+
+
+            </div>
+
+        </form>
 
     </div>
 
