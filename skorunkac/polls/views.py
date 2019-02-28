@@ -8,30 +8,16 @@ from django.conf import settings
 from skorunkac.polls.models import Session, Question, Answer, Poll, Category
 
 
-def select_session(request):
-    if request.method == 'POST':
-        session = get_object_or_404(Session, id=request.POST.get('session'))
-        return redirect(
-            'init_poll', session.slug
-        )
-
-    return render(
-        request,
-        template_name='select_session.html',
-        context={
-            'sessions': Session.objects.filter(active=True)
-        }
-    )
-
-
 class PollForm(ModelForm):
     class Meta:
         model = Poll
         fields = ['gender', 'age', 'education', 'marital_status', 'hometown_size']
 
 
-def init_poll(request, session_slug):
-    session = get_object_or_404(Session, slug=session_slug, active=True)
+def init_poll(request, session_slug=None):
+    session = None
+    if session_slug:
+        session = get_object_or_404(Session, slug=session_slug, active=True)
 
     if request.method == 'POST':
         form = PollForm(request.POST)
