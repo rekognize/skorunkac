@@ -15,12 +15,20 @@ class Category(models.Model):
         verbose_name_plural = 'kategoriler'
 
 
+class QuestionSource(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Question(models.Model):
     question = models.CharField('soru', max_length=250)
     question_f = models.CharField('soru (kadın versiyonu)', blank=True, null=True, max_length=250)
     category = models.ForeignKey(Category, verbose_name='kategori', blank=True, null=True, on_delete=models.SET_NULL)
     order = models.PositiveSmallIntegerField('sıralama', blank=True, null=True)
     inverse_score = models.BooleanField('ters skor', default=False)
+    source = models.ForeignKey(QuestionSource, verbose_name='kaynak', blank=True, null=True, on_delete=models.SET_NULL)
     active = models.BooleanField('yayında', default=True)
 
     def __str__(self):
