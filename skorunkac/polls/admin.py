@@ -2,12 +2,17 @@ import csv
 from io import StringIO
 from django.http import HttpResponse
 from django.contrib import admin
-from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer
+from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer, QuestionSource
 
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(QuestionSource)
+class QuestionSourceAdmin(admin.ModelAdmin):
     pass
 
 
@@ -49,8 +54,8 @@ class SessionAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question', 'question_f', 'inverse_score', 'category', 'order', 'active',)
-    list_editable = ('category', 'order', 'active', 'question_f', 'inverse_score')
+    list_display = ('question', 'question_f', 'inverse_score', 'category', 'order', 'active', 'source')
+    list_editable = ('category', 'order', 'active', 'question_f', 'inverse_score', 'source')
 
 
 @admin.register(Poll)
