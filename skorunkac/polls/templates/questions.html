@@ -28,8 +28,10 @@
 
                     </div>
 
-                    <div class="row mb-5 w-100">
+                    <input type="text" class="slider" name="{{ question.id }}" value="{% widthratio poll_settings.ANSWER_STEPS 2 1 %}" />
 
+                    <div class="row mb-5 w-100">
+                    {% comment %}
                         <div class="btn-group btn-group-toggle d-flex w-100 justify-content-center" data-toggle="buttons">
 
                             {% for value, text in answer_form.answer.field.choices %}
@@ -44,7 +46,7 @@
                             {% endfor %}
 
                         </div>
-
+                    {% endcomment %}
                     </div>
 
                 {% endfor %}
@@ -71,5 +73,18 @@
          </div>
 
     </div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+$(".slider").ionRangeSlider({
+    min: 0,
+    max: {{ poll_settings.ANSWER_STEPS }}
+});
+
+</script>
 
 {% endblock %}

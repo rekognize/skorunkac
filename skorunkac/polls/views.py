@@ -72,7 +72,7 @@ def questions(request, poll_id, page_no):
             except:
                 pass
             else:
-                if answer in range(0, 5):
+                if answer in range(0, settings.POLL_SETTINGS['ANSWER_STEPS'] + 1):
                     Answer.objects.update_or_create(
                         poll=poll,
                         question=question,
@@ -96,8 +96,8 @@ def questions(request, poll_id, page_no):
             question_count = Question.objects.filter(active=True).count()
             inverse_question_count = Question.objects.filter(active=True).filter(inverse_score=True).count()
             poll.score = round(
-                100 * (score + (settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * inverse_question_count - inverse_score)) /
-                question_count / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'], 1
+                100 * (score + (settings.POLL_SETTINGS['ANSWER_STEPS'] * inverse_question_count - inverse_score)) /
+                question_count / settings.POLL_SETTINGS['ANSWER_STEPS'], 1
             )
             poll.save()
             return redirect(
@@ -113,6 +113,7 @@ def questions(request, poll_id, page_no):
             'page_no': page_no,
             'answer_form': AnswerForm(),
             'poll': poll,
+            'poll_settings': settings.POLL_SETTINGS,
         }
     )
 
@@ -128,7 +129,7 @@ def result(request, poll_id):
         if answer:
             points = answer.answer
             if answer.question.inverse_score:
-                points = settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] - answer.answer
+                points = settings.POLL_SETTINGS['ANSWER_STEPS'] - answer.answer
         if category in scores_by_category:
             scores_by_category[category]['question_count'] += 1
             scores_by_category[category]['total_points'] += points
@@ -139,7 +140,7 @@ def result(request, poll_id):
             }
     for cat, val in scores_by_category.items():
         scores_by_category[cat]['score'] = round(
-            100 / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * scores_by_category[cat]['total_points'] /
+            100 / settings.POLL_SETTINGS['ANSWER_STEPS'] * scores_by_category[cat]['total_points'] /
             scores_by_category[cat]['question_count'],
             1
         )
@@ -190,7 +191,7 @@ def suggest(request, poll_id):
             }
     for cat, val in scores_by_category.items():
         scores_by_category[cat]['score'] = round(
-            100 / settings.POLL_SETTINGS['MAX_POINTS_PER_QUESTION'] * scores_by_category[cat]['total_points'] /
+            100 / settings.POLL_SETTINGS['ANSWER_STEPS'] * scores_by_category[cat]['total_points'] /
             scores_by_category[cat]['question_count'],
             1
         )

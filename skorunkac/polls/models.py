@@ -173,17 +173,7 @@ class Poll(models.Model):
 class Answer(models.Model):
     poll = models.ForeignKey(Poll, verbose_name='anket', on_delete=models.CASCADE)
     question = models.ForeignKey(Question, verbose_name='soru', on_delete=models.CASCADE)
-    answer = models.SmallIntegerField(
-        'cevap',
-        choices=(
-            (0, 'kesinlikle katılmıyorum'),
-            (1, 'kısmen katılmıyorum'),
-            (2, 'kararsızım'),
-            (3, 'kısmen katılıyorum'),
-            (4, 'kesinlikle katılıyorum'),
-        ),
-        default=0,
-    )
+    answer = models.PositiveSmallIntegerField('cevap', default=0)
 
     class Meta:
         verbose_name = 'cevap'
