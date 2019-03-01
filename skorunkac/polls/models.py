@@ -128,9 +128,10 @@ class Poll(models.Model):
             ('l', 'LGBTI kadın'),
         ),
     )
-    age = models.PositiveSmallIntegerField('yaş', blank=True, null=True)
+    age = models.PositiveSmallIntegerField('yaşın', blank=True, null=True)
     education = models.PositiveSmallIntegerField(
-        'eğitim durumu',
+        'eğitim durumun',
+        help_text='son bitirdiğin okul',
         blank=True, null=True,
         choices=(
             (0, 'Diplomasız okur'),
