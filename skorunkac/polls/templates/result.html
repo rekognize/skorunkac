@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags static %}
 
 
 {% block content %}
@@ -108,6 +108,7 @@
 
                 <div class="w-100 mt-2"></div>
 
+                {% comment %}
                 <blockquote class="blockquote">
                     <strong>{{ weakest_category.0.name }}</strong> konusunda kendini geliştirmek için derlediğimiz kaynaklara göz atmak ister misin?
                 </blockquote>
@@ -115,6 +116,7 @@
                 <div class="w-100"></div>
 
                 <a href="{% url 'suggest' poll_id=poll.id %}" class="btn btn-primary">Kaynakları göster</a>
+                {% endcomment %}
 
                 <a href="{% if poll.session %}{% url 'init_poll' session_slug=poll.session.slug %}{% else %}/{% endif %}" class="btn btn-primary ml-4">Tekrar basla</a>
 
@@ -125,6 +127,12 @@
                 Bu oyunda derlenen veriler hiçbir şekilde başka kuruluşlarla paylaşılmayacaktır.
                 Yanıtlar genel istatistiki veri olarak analiz edilecek ve derlenecektir.
             </p>
+
+            <div class="text-center w-100">
+                <p class="lead">
+                    <img src="{% static "teknosa.png" %}" style="height: 2em"> 'ya destek ve katkıları için teşekkür ederiz.
+                </p>
+            </div>
 
         </div>
     </div>
