@@ -119,7 +119,7 @@ class Session(models.Model):
 class Poll(models.Model):
     session = models.ForeignKey(Session, verbose_name='oturum', blank=True, null=True, on_delete=models.SET_NULL)
     gender = models.CharField(
-        'cinsiyet',
+        'cinsiyetin',
         max_length=1, blank=True, null=True,
         choices=(
             ('m', 'erkek'),
@@ -144,7 +144,7 @@ class Poll(models.Model):
         ),
     )
     marital_status = models.CharField(
-        'medeni durum',
+        'medeni durumun',
         max_length=1, blank=True, null=True,
         choices=(
             ('b', 'Bekar'),
@@ -155,7 +155,7 @@ class Poll(models.Model):
         ),
     )
     hometown_size = models.CharField(
-        'büyüdüğünüz yer',
+        'büyüdüğün yer',
         max_length=1, blank=True, null=True,
         choices=(
             ('k', 'Köy'),
@@ -165,7 +165,7 @@ class Poll(models.Model):
         ),
     )
     lifestyle = models.CharField(
-        'hayat tarzı',
+        'hayat tarzın',
         max_length=1,
         blank=True,
         null=True,
