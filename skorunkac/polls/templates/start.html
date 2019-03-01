@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags static %}
 
 
 {% block content %}
@@ -26,6 +26,12 @@
 
                 Testte kimliğini ortaya çıkaracak hiçbir soru yok. Tek tek kişilerin değil genel olarak insanların ne düşündüğünü, nasıl davrandığını anlamak istiyoruz.
             </p>
+
+            <div class="text-center w-100">
+            <p class="lead">
+                <img src="{% static "teknosa.png" %}" style="height: 2em"> 'ya destek ve katkıları için teşekkür ederiz.
+            </p>
+            </div>
 
             <p class="lead small">
                 <sup>*</sup> Bu testi hazırlarken PROMUNDO’nun GEMS ölçeğinden, KONDA Araştırma Şirketinin soru bankasından ve

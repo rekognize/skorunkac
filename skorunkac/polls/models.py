@@ -122,8 +122,8 @@ class Poll(models.Model):
         'cinsiyetin',
         max_length=1, blank=True, null=True,
         choices=(
-            ('m', 'erkek'),
-            ('f', 'kadın'),
+            ('m', 'Erkek'),
+            ('f', 'Kadın'),
             ('g', 'LGBTI erkek'),
             ('l', 'LGBTI kadın'),
         ),
@@ -171,9 +171,9 @@ class Poll(models.Model):
         blank=True,
         null=True,
         choices=(
-            ('m', 'modern'),
-            ('g', 'geleneksel muhafazakar'),
-            ('d', 'dindar muhafazakar'),
+            ('m', 'Modern'),
+            ('g', 'Geleneksel muhafazakar'),
+            ('d', 'Dindar muhafazakar'),
         ),
     )
     started = models.DateTimeField('başlangıç', auto_now_add=True, editable=False)
