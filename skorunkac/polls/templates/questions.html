@@ -52,7 +52,11 @@
 
                 </div>
 
-                <input type="text" class="slider" name="{{ question.id }}" value="{% widthratio poll_settings.ANSWER_STEPS 2 1 %}" />
+                <div class="row mb-5">
+                    <div class="col-10 offset-1">
+                        <input type="text" class="slider" name="{{ question.id }}" value="{% widthratio poll_settings.ANSWER_STEPS 2 1 %}" />
+                    </div>
+                </div>
 
                 <div class="row mb-5 w-100">
                 {% comment %}
