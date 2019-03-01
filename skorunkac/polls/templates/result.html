@@ -21,7 +21,7 @@
 
             {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_TODAY_THRESHOLD %}
             <p>
-                Bugün <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score_today.count }}</strong> kişinin ortalaması <strong>{{ session_score_today.avg|floatformat:1 }}</strong>
+                Bugün {% if poll.session %}<strong>{{ poll.session }}</strong> oturumunda{% endif %} ankete katılan <strong>{{ session_score_today.count }}</strong> kişinin ortalaması <strong>{{ session_score_today.avg|floatformat:1 }}</strong>
             </p>
             <div class="w-100"></div>
             {% endif %}
@@ -29,7 +29,7 @@
 
             {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_THRESHOLD %}
             <p>
-                Tüm zamanlarda <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score.count }}</strong> kişinin ortalaması <strong>{{ session_score.avg|floatformat:1 }}</strong>
+                Tüm zamanlarda {% if poll.session %}<strong>{{ poll.session }}</strong> oturumunda{% endif %} ankete katılan <strong>{{ session_score.count }}</strong> kişinin ortalaması <strong>{{ session_score.avg|floatformat:1 }}</strong>
             </p>
             <div class="w-100"></div>
             {% endif %}
