@@ -3,3 +3,4 @@ gunicorn
 psycopg2
 django-storages
 django-crispy-forms
+qrcode[pil]

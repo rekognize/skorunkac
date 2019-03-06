@@ -1,7 +1,8 @@
 import csv
-from io import StringIO
+from io import StringIO, BytesIO
 from django.http import HttpResponse
 from django.contrib import admin
+import qrcode
 from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer, QuestionSource
 
 
@@ -49,6 +50,21 @@ class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'created', 'active',)
     list_editable = ('active',)
+    actions = ['download_qr_code']
+
+    def download_qr_code(self, request, queryset):
+        for session in queryset:
+            qr = qrcode.make(f'http://skorunkac.yanindayiz.org{session.get_absolute_url()}')
+            with BytesIO() as f:
+                qr.save(f, 'PNG')
+                f.seek(0)
+                response = HttpResponse(
+                    f.read(),
+                    content_type='image/png'
+                )
+                response['Content-Disposition'] = f'attachment; filename="{session.slug}.png"'
+            return response
+    download_qr_code.short_description = "QR kodunu indir"
 
 
 @admin.register(Question)

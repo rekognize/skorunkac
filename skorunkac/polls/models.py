@@ -109,7 +109,7 @@ class Session(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('skorunkac.polls.views.details', args=[str(self.id)])
+        return reverse('init_poll', kwargs={'session_slug': self.slug})
 
     class Meta:
         verbose_name = 'oturum'
