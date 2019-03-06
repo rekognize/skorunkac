@@ -124,8 +124,8 @@ class Poll(models.Model):
         choices=(
             ('m', 'Erkek'),
             ('f', 'Kadın'),
-            ('g', 'LGBTI erkek'),
-            ('l', 'LGBTI kadın'),
+            #('g', 'LGBTI erkek'),
+            #('l', 'LGBTI kadın'),
         ),
     )
     age = models.PositiveSmallIntegerField('yaşın', blank=True, null=True)
