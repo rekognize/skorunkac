@@ -120,7 +120,7 @@ class Poll(models.Model):
     session = models.ForeignKey(Session, verbose_name='oturum', blank=True, null=True, on_delete=models.SET_NULL)
     gender = models.CharField(
         'cinsiyetin',
-        max_length=1, blank=True, null=True,
+        max_length=1,
         choices=(
             ('m', 'Erkek'),
             ('f', 'Kadın'),
@@ -128,11 +128,10 @@ class Poll(models.Model):
             #('l', 'LGBTI kadın'),
         ),
     )
-    age = models.PositiveSmallIntegerField('yaşın', blank=True, null=True)
+    age = models.PositiveSmallIntegerField('yaşın')
     education = models.PositiveSmallIntegerField(
         'eğitim durumun',
         help_text='son bitirdiğin okul',
-        blank=True, null=True,
         choices=(
             (0, 'Diplomasız okur'),
             (1, 'İlkokul mezunu'),
@@ -146,7 +145,7 @@ class Poll(models.Model):
     )
     marital_status = models.CharField(
         'medeni durumun',
-        max_length=1, blank=True, null=True,
+        max_length=1,
         choices=(
             ('b', 'Bekar'),
             ('s', 'Sözlü / Nişanlı'),
@@ -157,7 +156,7 @@ class Poll(models.Model):
     )
     hometown_size = models.CharField(
         'büyüdüğün yer',
-        max_length=1, blank=True, null=True,
+        max_length=1,
         choices=(
             ('k', 'Köy'),
             ('i', 'Kasaba / İlçe'),
@@ -167,9 +166,7 @@ class Poll(models.Model):
     )
     lifestyle = models.CharField(
         'hayat tarzın',
-        max_length=1,
-        blank=True,
-        null=True,
+        max_length=1, blank=True, null=True,
         choices=(
             ('m', 'Modern'),
             ('g', 'Geleneksel muhafazakar'),
