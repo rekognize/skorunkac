@@ -48,7 +48,7 @@ class AnswerAdmin(admin.ModelAdmin):
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'created', 'active',)
+    list_display = ('name', 'created', 'active', 'average_score')
     list_editable = ('active',)
     actions = ['download_qr_code']
 

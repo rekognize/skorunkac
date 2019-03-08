@@ -1,6 +1,7 @@
 from urllib.parse import urlparse, parse_qs
 from django.db import models
 from django.urls import reverse
+from django.db.models import Avg
 from django.core.exceptions import ValidationError
 from skorunkac.cities.models import City
 
@@ -110,6 +111,9 @@ class Session(models.Model):
 
     def get_absolute_url(self):
         return reverse('init_poll', kwargs={'session_slug': self.slug})
+
+    def average_score(self):
+        return self.poll_set.exclude(score__isnull=True).aggregate(Avg('score'))['score__avg']
 
     class Meta:
         verbose_name = 'oturum'
