@@ -118,8 +118,6 @@
                 <a href="{% url 'suggest' poll_id=poll.id %}" class="btn btn-primary">Kaynakları göster</a>
                 {% endcomment %}
 
-                <a href="{% if poll.session %}{% url 'init_poll' session_slug=poll.session.slug %}{% else %}/{% endif %}" class="btn btn-primary ml-4">Tekrar basla</a>
-
             {% endif %}
 
             <p class="mt-5">
