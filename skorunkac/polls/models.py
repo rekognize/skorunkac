@@ -8,6 +8,7 @@ from skorunkac.cities.models import City
 
 class Category(models.Model):
     name = models.CharField('kategori adı', max_length=100)
+    description = models.CharField('açıklama', max_length=250, blank=True, null=True)
 
     def __str__(self):
         return self.name
