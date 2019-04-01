@@ -48,8 +48,7 @@ class Question(models.Model):
 
 class Media(models.Model):
     categories = models.ManyToManyField(Category, verbose_name='kategoriler')
-    content = models.FileField('içerik', blank=True, null=True)
-    url = models.URLField('bağlantı', blank=True, null=True)
+    url = models.URLField('bağlantı')
     description = models.TextField('tanım', blank=True, null=True)
     active = models.BooleanField('yayında', default=True)
 
