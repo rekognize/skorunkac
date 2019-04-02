@@ -20,7 +20,13 @@ class QuestionSourceAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('poll', 'session', 'question', 'answer',)
     actions = ['download']
-    list_filter = ['poll__session', 'poll__gender', 'poll__education', 'poll__lifestyle', 'question']
+    list_filter = [
+        'poll__session',
+        'poll__gender',
+        'poll__education',
+        #'poll__lifestyle',
+        'question'
+    ]
 
     def poll(self, answer):
         return answer.poll
@@ -76,8 +82,45 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('session', 'started', 'ended', 'score', 'gender', 'age', 'education', 'lifestyle')
-    list_filter = ['session', 'started', 'gender', 'education', 'lifestyle']
+    list_display = [
+        'session',
+        'started',
+        'ended',
+        'score',
+        'gender',
+        'age',
+        'education',
+        #'lifestyle'
+    ]
+    list_filter = [
+        'session',
+        'started',
+        'gender',
+        'education',
+        #'lifestyle'
+    ]
+    actions = ['download']
+
+    def download(self, request, qs):
+        f = StringIO()
+        writer = csv.writer(f)
+        for poll in qs:
+            writer.writerow([
+                poll.session,
+                poll.get_gender_display(),
+                poll.age,
+                poll.get_marital_status_display(),
+                poll.get_hometown_size_display(),
+                poll.score,
+            ])
+        f.seek(0)
+        response = HttpResponse(
+            f.read(),
+            content_type='text/csv'
+        )
+        response['Content-Disposition'] = 'attachment; filename="anketler.csv"'
+        return response
+    download.short_description = "Anket sonuçlarını indir"
 
 
 @admin.register(Media)
