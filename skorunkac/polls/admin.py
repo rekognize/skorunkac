@@ -43,6 +43,7 @@ class AnswerAdmin(admin.ModelAdmin):
         )
         response['Content-Disposition'] = 'attachment; filename="cevaplar.csv"'
         return response
+    download.short_description = "Cevapları indir"
 
 
 @admin.register(Session)
