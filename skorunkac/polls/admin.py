@@ -33,7 +33,7 @@ class AnswerAdmin(admin.ModelAdmin):
 
     def download(self, request, qs):
         f = StringIO()
-        writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        writer = csv.writer(f)
         for answer in qs:
             writer.writerow([answer.poll.session, answer.poll, answer.question, answer.answer])
         f.seek(0)
