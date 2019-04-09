@@ -25,7 +25,12 @@ SECRET_KEY = '=+*^s!llb1l*9^sol_8$$97yjo051e@*p@07ej$hsn3tpk4-&7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['local.host', 'skorunkac.rekognize.io', 'skorunkac.yanindayiz.org']
+ALLOWED_HOSTS = [
+    'local.host',
+    'ec2-3-18-220-11.us-east-2.compute.amazonaws.com',
+    'skorunkac.rekognize.io',
+    'skorunkac.yanindayiz.org',
+]
 
 
 # Application definition
