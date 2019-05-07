@@ -52,7 +52,7 @@ class Media(models.Model):
     url = models.URLField('bağlantı')
     description = models.TextField('tanım', blank=True, null=True)
     active = models.BooleanField('yayında', default=True)
-    added = models.DateTimeField(auto_now_add=True)
+    added = models.DateTimeField('eklenme tarihi', auto_now_add=True)
 
     def __str__(self):
         return self.url
