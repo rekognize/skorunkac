@@ -54,7 +54,7 @@ class Media(models.Model):
     active = models.BooleanField('yayında', default=True)
 
     def __str__(self):
-        return self.content or self.url
+        return self.url
 
     def clean(self):
         if not [bool(self.content), bool(self.url)].count(True) == 1:
