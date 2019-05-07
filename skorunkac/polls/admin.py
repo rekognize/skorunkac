@@ -125,7 +125,7 @@ class PollAdmin(admin.ModelAdmin):
 
 @admin.register(Media)
 class MediaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'cats', 'description', 'active',)
+    list_display = ('__str__', 'cats', 'description', 'added', 'active',)
     list_editable = ('active',)
 
     def cats(self, media):
