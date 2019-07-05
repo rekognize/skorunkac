@@ -114,7 +114,8 @@ class Session(models.Model):
         return reverse('init_poll', kwargs={'session_slug': self.slug})
 
     def average_score(self):
-        return self.poll_set.exclude(score__isnull=True).aggregate(Avg('score'))['score__avg']
+        return round(self.poll_set.exclude(score__isnull=True).aggregate(Avg('score'))['score__avg'] or 0, 2)
+    average_score.short_description = 'ortalama'
 
     class Meta:
         verbose_name = 'oturum'

@@ -1,15 +1,32 @@
 import csv
 from io import StringIO, BytesIO
 from django.http import HttpResponse
+from django.conf import settings
 from django.contrib import admin
+from django.db.models import Sum, Count, Avg, F, Q
 import qrcode
 from skorunkac.polls.models import Question, Media, Session, Poll, Category, Answer, QuestionSource
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'average_score']
 
+    def average_score(self, category):
+        score = category.question_set.filter(active=True).filter(
+            inverse_score=False
+        ).aggregate(total_points=Sum('answer__answer'))['total_points'] or 0
+        inverse_score = category.question_set.filter(active=True).filter(
+            inverse_score=True
+        ).aggregate(total_points=Sum('answer__answer'))['total_points'] or 0
+        answer_count = Answer.objects.filter(question__category=category).filter(question__active=True).count()
+        inverse_answer_count = Answer.objects.filter(question__category=category).filter(question__active=True).filter(question__inverse_score=True).count()
+        print(score, inverse_score, answer_count, inverse_answer_count)
+        return round(
+            100 * (score + (settings.POLL_SETTINGS['ANSWER_STEPS'] * inverse_answer_count - inverse_score)) /
+            answer_count / settings.POLL_SETTINGS['ANSWER_STEPS'], 2
+        )
+    average_score.short_description = 'ortalama'
 
 @admin.register(QuestionSource)
 class QuestionSourceAdmin(admin.ModelAdmin):
