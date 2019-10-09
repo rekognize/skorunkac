@@ -63,6 +63,7 @@ class AnswerAdmin(admin.ModelAdmin):
             'Anket Id',
             'Soru',
             'Cevap',
+            'Cinsiyet',
             'Eğitim durumu',
             'Yaş',
         ])
@@ -72,6 +73,7 @@ class AnswerAdmin(admin.ModelAdmin):
                 answer.poll.id,
                 answer.question.question,
                 answer.answer,
+                answer.poll.get_gender_display(),
                 answer.poll.get_education_display(),
                 answer.poll.age,
             ])
