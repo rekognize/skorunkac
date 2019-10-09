@@ -58,8 +58,23 @@ class AnswerAdmin(admin.ModelAdmin):
     def download(self, request, qs):
         f = StringIO()
         writer = csv.writer(f)
+        writer.writerow([
+            'Oturum adı',
+            'Anket Id',
+            'Soru',
+            'Cevap',
+            'Eğitim durumu',
+            'Yaş',
+        ])
         for answer in qs:
-            writer.writerow([answer.poll.session, answer.poll, answer.question, answer.answer])
+            writer.writerow([
+                answer.poll.session.name,
+                answer.poll.id,
+                answer.question.question,
+                answer.answer,
+                answer.poll.get_education_display(),
+                answer.poll.age,
+            ])
         f.seek(0)
         response = HttpResponse(
             f.read(),
@@ -74,7 +89,8 @@ class AnswerAdmin(admin.ModelAdmin):
 class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
-        'name', 'created', 'active', 'average_score', 'average_score_m', 'average_score_f', 'participant_count'
+        'name', 'created', 'active', 'participant_count_m', 'average_score_m',
+        'participant_count_f', 'average_score_f', 'participant_count', 'average_score'
     )
     list_editable = ('active',)
     actions = ['download_qr_code']
@@ -108,6 +124,14 @@ class SessionAdmin(admin.ModelAdmin):
     def participant_count(self, obj):
         return round(obj.poll_set.exclude(score__isnull=True).count())
     participant_count.short_description = 'toplam katılımcı'
+
+    def participant_count_m(self, obj):
+        return round(obj.poll_set.filter(gender='m').exclude(score__isnull=True).count())
+    participant_count_m.short_description = 'toplam katılımcı (erkek)'
+
+    def participant_count_f(self, obj):
+        return round(obj.poll_set.filter(gender='f').exclude(score__isnull=True).count())
+    participant_count_f.short_description = 'toplam katılımcı (kadın)'
 
 
 @admin.register(Question)
