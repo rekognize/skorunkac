@@ -28,6 +28,7 @@ class CategoryAdmin(admin.ModelAdmin):
         )
     average_score.short_description = 'ortalama'
 
+
 @admin.register(QuestionSource)
 class QuestionSourceAdmin(admin.ModelAdmin):
     pass
@@ -72,7 +73,9 @@ class AnswerAdmin(admin.ModelAdmin):
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'created', 'active', 'average_score')
+    list_display = (
+        'name', 'created', 'active', 'average_score', 'average_score_m', 'average_score_f', 'participant_count'
+    )
     list_editable = ('active',)
     actions = ['download_qr_code']
 
@@ -89,6 +92,22 @@ class SessionAdmin(admin.ModelAdmin):
                 response['Content-Disposition'] = f'attachment; filename="{session.slug}.png"'
             return response
     download_qr_code.short_description = "QR kodunu indir"
+
+    def average_score(self, obj):
+        return round(obj.poll_set.exclude(score__isnull=True).aggregate(Avg('score'))['score__avg'] or 0, 2)
+    average_score.short_description = 'ortalama skor'
+
+    def average_score_m(self, obj):
+        return round(obj.poll_set.filter(gender='m').exclude(score__isnull=True).aggregate(Avg('score'))['score__avg'] or 0, 2)
+    average_score_m.short_description = 'ortalama skor (erkek)'
+
+    def average_score_f(self, obj):
+        return round(obj.poll_set.filter(gender='f').exclude(score__isnull=True).aggregate(Avg('score'))['score__avg'] or 0, 2)
+    average_score_f.short_description = 'ortalama skor (kadın)'
+
+    def participant_count(self, obj):
+        return round(obj.poll_set.exclude(score__isnull=True).count())
+    participant_count.short_description = 'toplam katılımcı'
 
 
 @admin.register(Question)
