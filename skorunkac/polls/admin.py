@@ -89,8 +89,8 @@ class AnswerAdmin(admin.ModelAdmin):
 class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
-        'name', 'created', 'active', 'participant_count_m', 'average_score_m',
-        'participant_count_f', 'average_score_f', 'participant_count', 'average_score'
+        'name', 'created', 'active', 'participant_count', 'average_score', 'participant_count_m', 'average_score_m',
+        'participant_count_f', 'average_score_f'
     )
     list_editable = ('active',)
     actions = ['download_qr_code']
