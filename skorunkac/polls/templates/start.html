@@ -1,48 +1,96 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags static %}
+{% load i18n crispy_forms_tags static %}
 
 
 {% block content %}
+
+    {% get_current_language as LANGUAGE_CODE %}
 
     <div class="container px-4">
 
         <div class="row">
 
             <h2 class="mt-5">
-                SKORUN KAÇ oyunumuza hoşgeldin!
+
+                {% if LANGUAGE_CODE == 'en' %}
+                    Welcome to Our WHAT’S YOUR SCORE Game!
+                {% else %}
+                    SKORUN KAÇ oyunumuza hoşgeldin!
+                {% endif %}
+
                 <small class="text-muted">{{ session.name }}</small>
             </h2>
 
 
 
             <p class="lead">
-                Kadın ve erkeğin toplumdaki, iş hayatındaki, evde ve aile içindeki yeri, karşılıklı ilişkileri konusunda ne
-                düşünüyorsun, nasıl davranıyorsun?
-                Bu test<sup>*</sup> SENİN bu konulardaki tutum ve davranışlarına, algına AYNA tutmayı amaçlıyor.
+                {% if LANGUAGE_CODE == 'en' %}
+                    What do you think and how do you act on the role of women and men in society, work, home, family life,
+                    and in their mutual relationships?
+                {% else %}
+                    Kadın ve erkeğin toplumdaki, iş hayatındaki, evde ve aile içindeki yeri, karşılıklı ilişkileri konusunda ne
+                    düşünüyorsun, nasıl davranıyorsun?
+                {% endif %}
             </p>
 
             <p class="lead">
-                Fikirlerini açık ve samimi bir şekilde ifade etmen amacımızı gerçekleştirmek açısından büyük önem taşıyor.
+                {% if LANGUAGE_CODE == 'en' %}
+                    This test aims to reflect your attitude and behaviors on the subjects mentioned above.
+                {% else %}
+                    Bu test<sup>*</sup> SENİN bu konulardaki tutum ve davranışlarına, algına AYNA tutmayı amaçlıyor.
+                {% endif %}
+            </p>
 
-                Testte kimliğini ortaya çıkaracak hiçbir soru yok. Tek tek kişilerin değil genel olarak insanların ne düşündüğünü, nasıl davrandığını anlamak istiyoruz.
+            <p class="lead">
+                {% if LANGUAGE_CODE == 'en' %}
+                    It is important for you to express your opinions clearly and sincerely in order to reach our goal.
+                    There are no questions that will reveal your identity. Our aim to understand how general public thinks and behave rather than individuals.
+                {% else %}
+                    Fikirlerini açık ve samimi bir şekilde ifade etmen amacımızı gerçekleştirmek açısından büyük önem taşıyor.
+                    Testte kimliğini ortaya çıkaracak hiçbir soru yok. Tek tek kişilerin değil genel olarak insanların ne düşündüğünü, nasıl davrandığını anlamak istiyoruz.
+                {% endif %}
+            </p>
+
+            <p class="lead">
             </p>
 
             <div class="text-center w-100">
                 <p class="lead">
-                    <span class="small">Teknosa'nın katkılarıyla</span>
+
+                    <span class="small">
+                        {% if LANGUAGE_CODE == 'en' %}
+                            With the Contribution of Teknosa
+                        {% else %}
+                            Teknosa'nın katkılarıyla
+                        {% endif %}
+                    </span>
+
                     <br>
+
                     <img src="{% static "teknosa.png" %}" style="height: 2em">
                 </p>
             </div>
 
             <p class="lead small">
-                <sup>*</sup> Bu testi hazırlarken PROMUNDO’nun GEMS ölçeğinden, KONDA Araştırma Şirketinin soru bankasından ve
-                Hale Bolak Boratav, Güler Okman Fişek, Hande Eslen Ziya’nın Erkekliğin Türkiye Halleri, 2018 çalışmasından faydalandık.
+                <sup>*</sup>
+
+                {% if LANGUAGE_CODE == 'en' %}
+                    While developing this test, we made use of the GEMS scale of PROMUNDO, the question bank by KONDA Research Company,
+                    and the work namely “Masculinity Moods in Turkey” (“Erkekliğin Türkiye Halleri”) 2018, by Hale Bolak Boratav, Güler Okman Fişek and Hande Eslen Ziya.
+                {% else %}
+                    Bu testi hazırlarken PROMUNDO’nun GEMS ölçeğinden, KONDA Araştırma Şirketinin soru bankasından ve
+                    Hale Bolak Boratav, Güler Okman Fişek, Hande Eslen Ziya’nın Erkekliğin Türkiye Halleri, 2018 çalışmasından faydalandık.
+                {% endif %}
+
             </p>
 
 
             <h4 class="mt-4">
-                Başlamadan önce kısaca tanışabilir miyiz?
+                {% if LANGUAGE_CODE == 'en' %}
+                    Before we proceed, can you briefly introduce yourself?
+                {% else %}
+                    Başlamadan önce kısaca tanışabilir miyiz?
+                {% endif %}
             </h4>
 
 
@@ -56,7 +104,7 @@
 
                 {{ form|crispy }}
 
-                <button type="submit" class="btn btn-primary btn-lg">Başla</button>
+                <button type="submit" class="btn btn-primary btn-lg">{% trans "Start" %}</button>
 
             </form>
 

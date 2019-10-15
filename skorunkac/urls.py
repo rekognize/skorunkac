@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 from skorunkac.polls import views
+from skorunkac.views import set_language
 
 
 admin.site.site_header = 'Skorun Kaç?'
@@ -11,6 +10,7 @@ admin.site.site_title = 'Skorun Kaç?'
 
 urlpatterns = [
     path('yonetim/', admin.site.urls),
+    path('lang/', set_language, name='set_lang'),
 
     path('', views.init_poll, name='init_poll'),
     path('<int:poll_id>/', views.result, name='result'),

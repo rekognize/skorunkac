@@ -1,12 +1,16 @@
-{% load static %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html>
 <head lang="tr">
 
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    {% get_language_info_list for LANGUAGES as languages %}
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{% block title %}Skorun Kaç?{% endblock %}</title>
+    <title>{% block title %}{% if LANGUAGE_CODE == 'en' %}What's your score!{% else %}Skorun Kaç?{% endif %}{% endblock %}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.0/css/bootstrap.min.css">
 
@@ -25,9 +29,26 @@
 
 <div class="text-center mt-4">
 
-<a href="/" style="font-family: 'Cutive Mono', monospace; font-weight: 900">
-    <img src="{% static 'skorunkac.png' %}" style="max-width:40%">
-</a>
+    <a href="/">
+        <img src="{% static 'skorunkac.png' %}" style="max-width:40%">
+    </a>
+
+    <div class="container">
+
+        <div class="float-right">
+
+            {% for language in languages %}
+                {% if language.code != LANGUAGE_CODE %}
+                    <a href="{% url 'set_lang' %}?lang={{ language.code }}">{{ language.name_local }}</a>
+                {% else %}
+                    {{ language.name_local }}
+                {% endif %}
+                {% if not forloop.last %} | {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
 
 </div>
 

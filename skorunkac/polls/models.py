@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import Avg
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 from skorunkac.cities.models import City
 
 
@@ -31,7 +32,9 @@ class QuestionSource(models.Model):
 
 class Question(models.Model):
     question = models.CharField('soru', max_length=250)
+    question_en = models.CharField('soru [EN]', max_length=250)
     question_f = models.CharField('soru (kadın versiyonu)', blank=True, null=True, max_length=250)
+    question_f_en = models.CharField('soru (kadın versiyonu) [EN]', blank=True, null=True, max_length=250)
     category = models.ForeignKey(Category, verbose_name='kategori', blank=True, null=True, on_delete=models.SET_NULL)
     order = models.PositiveSmallIntegerField('sıralama', blank=True, null=True)
     inverse_score = models.BooleanField('ters skor', default=False)
@@ -121,58 +124,56 @@ class Session(models.Model):
 class Poll(models.Model):
     session = models.ForeignKey(Session, verbose_name='oturum', blank=True, null=True, on_delete=models.SET_NULL)
     gender = models.CharField(
-        'cinsiyetin',
+        _('Gender'),
         max_length=1,
         choices=(
-            ('m', 'Erkek'),
-            ('f', 'Kadın'),
-            #('g', 'LGBTI erkek'),
-            #('l', 'LGBTI kadın'),
+            ('m', _('Male')),
+            ('f', _('Female')),
         ),
     )
-    age = models.PositiveSmallIntegerField('yaşın')
+    age = models.PositiveSmallIntegerField(_('Your age'))
     education = models.PositiveSmallIntegerField(
-        'eğitim durumun',
-        help_text='son bitirdiğin okul',
+        _('Education'),
+        help_text=_('Final degree'),
         choices=(
-            (0, 'Diplomasız okur'),
-            (1, 'İlkokul mezunu'),
-            (2, 'İlköğretim / Ortaokul mezunu'),
-            (3, 'Lise mezunu'),
-            (4, 'Yüksekokul mezunu'),
-            (5, 'Lisans mezunu'),
-            (6, 'Yüksek lisans'),
-            (7, 'Doktora'),
+            (0, _('No formal education')),
+            (1, _('Primary School')),
+            (2, _('Secondary School')),
+            (3, _('High School')),
+            (4, _('College')),
+            (5, _('University')),
+            (6, _('Masters')),
+            (7, _('Doctorate / PhD')),
         ),
     )
     marital_status = models.CharField(
-        'medeni durumun',
+        _('Marital Status'),
         max_length=1,
         choices=(
-            ('b', 'Bekar'),
-            ('s', 'Sözlü / Nişanlı'),
-            ('e', 'Evli'),
-            ('d', 'Dul'),
-            ('a', 'Boşanmış'),
+            ('b', _('Single / Not Married')),
+            ('s', _('Has a partner / Engaged')),
+            ('e', _('Married')),
+            ('d', _('Widowed')),
+            ('a', _('Divorced')),
         ),
     )
     hometown_size = models.CharField(
-        'büyüdüğün yer',
+        _('Where You Grew Up'),
         max_length=1,
         choices=(
-            ('k', 'Köy'),
-            ('i', 'Kasaba / İlçe'),
-            ('s', 'Şehir'),
-            ('m', 'Büyükşehir / Metropol'),
+            ('k', _('Village')),
+            ('i', _('Town')),
+            ('s', _('City')),
+            ('m', _('Metropolis')),
         ),
     )
     lifestyle = models.CharField(
-        'hayat tarzın',
+        _('Life style'),
         max_length=1, blank=True, null=True,
         choices=(
-            ('m', 'Modern'),
-            ('g', 'Geleneksel muhafazakar'),
-            ('d', 'Dindar muhafazakar'),
+            ('m', _('Modern')),
+            ('g', _('Conservative')),
+            ('d', _('Religious conservative')),
         ),
     )
     started = models.DateTimeField('başlangıç', auto_now_add=True, editable=False)
