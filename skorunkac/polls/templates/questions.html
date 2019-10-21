@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags i18n %}
 
 
 {% block content %}
+
+    {% get_current_language as LANGUAGE_CODE %}
 
     <div class="container px-4">
 
@@ -10,22 +12,25 @@
 
             <h3 class="mt-4 w-100">
             {% if page_no == 1 %}
-                Artık başlayabiliriz!
+                {% trans "You can start now!" %}
             {% else %}
-                Sayfa {{ page_no }}
+                {% trans "Page" %} {{ page_no }}
             {% endif %}
             </h3>
 
             {% if page_no == 1 %}
             <p class="lead">
-                Sana Toplumsal Cinsiyet Eşitliği konusunda 20 farklı görüş sunuyoruz.
-                Lütfen her birine ne ölçüde katıldığını ya da katılmadığını, ölçekteki düğmeyi sağa sola kaydırarak
-                belirt.
+            {% blocktrans %}
+                You will find 20 different statements on Gender Equality.
+                Swipe the scale left or right to indicate whether you agree or disagree.
+            {% endblocktrans %}
             </p>
             {% endif %}
 
             <p class="lead">
-                <em>Ölçeğin en solu, görüşe “hiç katılmadığını” en sağı ise “kesinlikle katıldığını” gösterir.</em>
+                <em>
+                    {% trans "The left of the scale shows that you “strongly disagree” and the right of the scale shows that you “strongly agree”." %}
+                </em>
             </p>
 
         </div>
@@ -45,13 +50,29 @@
 
                     <p class="lead">
 
-                    {% if poll.gender == 'f' and question.question_f %}
+                    {% if LANGUAGE_CODE == 'en' %}
 
-                        {{ question.question_f }}
+                        {% if poll.gender == 'f' and question.question_f_en %}
+
+                            {{ question.question_f_en }}
+
+                        {% else %}
+
+                            {{ question.question_en }}
+
+                        {% endif %}
 
                     {% else %}
 
-                        {{ question.question }}
+                        {% if poll.gender == 'f' and question.question_f %}
+
+                            {{ question.question_f }}
+
+                        {% else %}
+
+                            {{ question.question }}
+
+                        {% endif %}
 
                     {% endif %}
 

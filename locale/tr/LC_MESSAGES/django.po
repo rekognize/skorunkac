@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 06:32+0000\n"
+"POT-Creation-Date: 2019-10-21 14:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,6 +133,138 @@ msgstr "Geleneksel muhafazakar"
 #: skorunkac/polls/models.py:176
 msgid "Religious conservative"
 msgstr "Dindar muhafazakar"
+
+#: skorunkac/polls/templates/questions.html:13
+msgid "You can start now!"
+msgstr "Artık başlayabiliriz!"
+
+#: skorunkac/polls/templates/questions.html:15
+msgid "Page"
+msgstr "Sayfa"
+
+#: skorunkac/polls/templates/questions.html:21
+msgid ""
+"\n"
+"                You will find 20 different statements on Gender Equality.\n"
+"                Swipe the scale left or right to indicate whether you agree "
+"or disagree.\n"
+"            "
+msgstr ""
+"Sana Toplumsal Cinsiyet Eşitliği konusunda 20 farklı görüş sunuyoruz."
+"Lütfen her birine ne ölçüde katıldığını ya da katılmadığını, ölçekteki düğmeyi sağa sola kaydırarak belirt."
+
+#: skorunkac/polls/templates/questions.html:30
+msgid ""
+"The left of the scale shows that you “strongly disagree” and the right of "
+"the scale shows that you “strongly agree”."
+msgstr ""
+"Ölçeğin en solu, görüşe “hiç katılmadığını” en sağı ise “kesinlikle katıldığını” gösterir."
+
+#: skorunkac/polls/templates/result.html:13
+msgid "Thank you for taking the time to complete our test!"
+msgstr "Testi tamamladın. Katıldığın için teşekkürler!"
+
+#: skorunkac/polls/templates/result.html:16
+msgid "Your gender equality score"
+msgstr "Toplumsal cinsiyet eşitliği skorun"
+
+#: skorunkac/polls/templates/result.html:27
+#, python-format
+msgid ""
+"\n"
+"                        Average of <strong>%(count)s</strong> people who "
+"completed the survey today at the %(session)s session is %(average)s\n"
+"                    "
+msgstr ""
+"Bugün <strong>%(session)s</strong> oturumunda ankete katılan <strong>"
+"%(count)s</strong> kişinin ortalaması <strong>%(average)s</strong>"
+
+#: skorunkac/polls/templates/result.html:31
+#, python-format
+msgid ""
+"\n"
+"                        Average of <strong>%(count)s</strong> people who "
+"completed the survey today is <strong>%(average)s</strong>\n"
+"                    "
+msgstr ""
+"Bugün ankete katılan <strong>%(count)s</strong> kişinin ortalaması <strong>"
+"%(average)s</strong>"
+
+#: skorunkac/polls/templates/result.html:43
+#, python-format
+msgid ""
+"\n"
+"                Average of <strong>%(count)s</strong> people who completed "
+"the survey so far at the %(session)s session is %(average)s\n"
+"            "
+msgstr ""
+"Şimdiye kadar <strong>%(session)s</strong> oturumunda ankete katılan <strong>"
+"%(count)s</strong> kişinin ortalaması <strong>%(average)s</strong>"
+
+#: skorunkac/polls/templates/result.html:54
+#, python-format
+msgid ""
+"\n"
+"                Average of <strong>%(count)s</strong> people who completed "
+"the survey so far is %(average)s\n"
+"            "
+msgstr ""
+"Şimdiye kadar ankete katılan <strong>%(count)s</strong> kişinin ortalaması "
+"<strong>%(average)s</strong>"
+
+#: skorunkac/polls/templates/result.html:66
+msgid "Your score by categories"
+msgstr "Kategorilere göre skorun"
+
+#: skorunkac/polls/templates/result.html:88
+msgid "Sorry, you couldn’t obtain a good score in any of the categories."
+msgstr "Maalesef hiçbir kategoriden iyi puan alamadın."
+
+#: skorunkac/polls/templates/result.html:93
+#, python-format
+msgid ""
+"\n"
+"                    Your best category is <em>%(category)s</em>;\n"
+"                    your score in this category is <span class=\"text-success"
+"\">%(score)s</span>\n"
+"                "
+msgstr ""
+"En iyi olduğun kategori <em>%(category)s</em>;bu kategorideki skorun <span "
+"class=\"text-success\">%(score)s</span>"
+
+#: skorunkac/polls/templates/result.html:106
+msgid "Congratulations, you scored high in all categories!"
+msgstr "Tebrikler, tüm kategorilerden yüksek puan aldın!"
+
+#: skorunkac/polls/templates/result.html:111
+#, python-format
+msgid ""
+"\n"
+"                    Your weakest category is <em>%(category)s</em>;\n"
+"                    your score in this category is <span class=\"text-warning"
+"\">%(score)s</span>\n"
+"                "
+msgstr ""
+"En zayıf olduğun kategori <em>%(category)s</em>;bu kategorideki skorun <span "
+"class=\"text-warning\">%(score)s</span>"
+
+#: skorunkac/polls/templates/result.html:133
+msgid ""
+"\n"
+"                Thank you for participating and sharing your opinion.\n"
+"                The data collected in this game won’t be shared with other "
+"institutions.\n"
+"                Answers will be analyzed as general statistical data.\n"
+"            "
+msgstr ""
+"SKORUN KAÇ oyunumuza katıldığın, görüşlerini bizimle paylaştığın için "
+"teşekkür ederiz.Bu oyunda derlenen veriler hiçbir şekilde başka kuruluşlarla "
+"paylaşılmayacaktır.Yanıtlar genel istatistiki veri olarak analiz edilecek ve "
+"derlenecektir."
+
+#: skorunkac/polls/templates/result.html:142
+msgid "With the Contribution of"
+msgstr "Teknosa'nın katkılarıyla"
 
 #: skorunkac/polls/templates/start.html:107
 msgid "Start"

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags static %}
+{% load crispy_forms_tags static i18n %}
 
 
 {% block content %}
@@ -9,9 +9,11 @@
         <div class="row">
 
             <h2 class="mb-4">
-                <small>Testi tamamladın. Katıldığın için teşekkürler!</small>
+                <small>
+                    {% trans "Thank you for taking the time to complete our test!" %}
+                </small>
                 <br>
-                Toplumsal cinsiyet eşitliği skorun:
+                {% trans "Your gender equality score" %}:
                 <span class="text-{% if poll.score >= poll_settings.SUCCESS_SCORE %}success{% elif poll.score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
                     {{ poll.score }}
                 </span>
@@ -21,7 +23,15 @@
 
             {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_TODAY_THRESHOLD %}
             <p>
-                Bugün {% if poll.session %}<strong>{{ poll.session }}</strong> oturumunda{% endif %} ankete katılan <strong>{{ session_score_today.count }}</strong> kişinin ortalaması <strong>{{ session_score_today.avg|floatformat:1 }}</strong>
+                {% if poll.session %}
+                    {% blocktrans with poll.session as session and session_score_today.count as count and session_score_today.avg|floatformat:1 as  average %}
+                        Average of <strong>{{ count }}</strong> people who completed the survey today at the {{ session }} session is {{ average }}
+                    {% endblocktrans %}
+                {% else %}
+                    {% blocktrans with session_score_today.count as count and session_score_today.avg|floatformat:1 as  average %}
+                        Average of <strong>{{ count }}</strong> people who completed the survey today is <strong>{{ average }}</strong>
+                    {% endblocktrans %}
+                {% endif %}
             </p>
             <div class="w-100"></div>
             {% endif %}
@@ -30,7 +40,9 @@
             {% if poll.session %}
             {% if session_score.count >= poll_settings.DISPLAY_AVERAGE_SESSION_THRESHOLD %}
             <p>
-                <strong>{{ poll.session }}</strong> oturumunda ankete katılan <strong>{{ session_score.count }}</strong> kişinin ortalaması <strong>{{ session_score.avg|floatformat:1 }}</strong>
+            {% blocktrans with poll.session as session and session_score.count as count and session_score.avg|floatformat:1 as  average %}
+                Average of <strong>{{ count }}</strong> people who completed the survey so far at the {{ session }} session is {{ average }}
+            {% endblocktrans %}
             </p>
             <div class="w-100"></div>
             {% endif %}
@@ -39,7 +51,9 @@
 
             {% if global_score.count >= poll_settings.DISPLAY_AVERAGE_TOTAL_THRESHOLD %}
             <p>
-                Şimdiye kadar ankete katılan <strong>{{ global_score.count }}</strong> kişinin ortalaması <strong>{{ global_score.avg|floatformat:1 }}</strong>
+            {% blocktrans with global_score.count as count and global_score.avg|floatformat:1 as average %}
+                Average of <strong>{{ count }}</strong> people who completed the survey so far is {{ average }}
+            {% endblocktrans %}
             </p>
             <div class="w-100"></div>
             {% endif %}
@@ -49,7 +63,7 @@
         <div class="row">
 
             <h3 class="mt-4">
-                Kategorilere göre skorun:
+                {% trans "Your score by categories" %}:
             </h3>
 
             <div class="w-100"></div>
@@ -71,19 +85,15 @@
 
             {% if strongest_category.1.score < poll_settings.FAIL_SCORE %}
 
-                <h3>Maalesef hiçbir kategoriden iyi puan alamadın!</h3>
+                <h3>{% trans "Sorry, you couldn’t obtain a good score in any of the categories." %}</h3>
 
             {% else %}
 
                 <p class="lead">
-                    En iyi olduğun kategori
-                    <em>{{ strongest_category.0.name }}</em>;
-                    bu kategorideki skorun
-                    {% with strongest_category.1.score as score %}
-                    <span class="text-{% if score >= poll_settings.SUCCESS_SCORE %}success{% elif score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
-                        {{ score }}
-                    </span>
-                    {% endwith %}
+                {% blocktrans with strongest_category.0.name as category and strongest_category.1.score as score %}
+                    Your best category is <em>{{ category }}</em>;
+                    your score in this category is <span class="text-success">{{ score }}</span>
+                {% endblocktrans %}
                 </p>
 
                 <div class="w-100 mt-2"></div>
@@ -93,19 +103,15 @@
 
             {% if weakest_category.1.score > poll_settings.SUCCESS_SCORE %}
 
-                <h3>Tebrikler, tüm kategorilerden yüksek puan aldın!</h3>
+                <h3>{% trans "Congratulations, you scored high in all categories!" %}</h3>
 
             {% else %}
 
                 <p class="lead">
-                    En zayıf olduğun kategori
-                    <em>{{ weakest_category.0.name }}</em>;
-                    bu kategorideki skorun
-                    {% with weakest_category.1.score as score %}
-                    <span class="text-{% if score >= poll_settings.SUCCESS_SCORE %}success{% elif score >= poll_settings.FAIL_SCORE %}warning{% else %}danger{% endif %}">
-                        {{ score }}
-                    </span>
-                    {% endwith %}
+                {% blocktrans with weakest_category.0.name as category and weakest_category.1.score as score %}
+                    Your weakest category is <em>{{ category }}</em>;
+                    your score in this category is <span class="text-warning">{{ score }}</span>
+                {% endblocktrans %}
                 </p>
 
                 <div class="w-100 mt-2"></div>
@@ -123,14 +129,16 @@
             {% endif %}
 
             <p class="mt-5">
-                SKORUN KAÇ oyunumuza katıldığın, görüşlerini bizimle paylaştığın için teşekkür ederiz.
-                Bu oyunda derlenen veriler hiçbir şekilde başka kuruluşlarla paylaşılmayacaktır.
-                Yanıtlar genel istatistiki veri olarak analiz edilecek ve derlenecektir.
+            {% blocktrans %}
+                Thank you for participating and sharing your opinion.
+                The data collected in this game won’t be shared with other institutions.
+                Answers will be analyzed as general statistical data.
+            {% endblocktrans %}
             </p>
 
             <div class="text-center w-100">
                 <p class="lead">
-                    <span class="small">Teknosa'nın katkılarıyla</span>
+                    <span class="small">{% trans "With the Contribution of" %}</span>
                     <br>
                     <img src="{% static "teknosa.png" %}" style="height: 2em">
                 </p>
