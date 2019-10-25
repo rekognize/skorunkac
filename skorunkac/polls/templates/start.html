@@ -57,6 +57,14 @@
             <div class="text-center w-100">
                 <p class="lead">
 
+                    <span class="small">
+                        {% if LANGUAGE_CODE == 'en' %}
+                            With the Contribution of
+                        {% else %}
+                            Teknosa'nın katkılarıyla
+                        {% endif %}
+                    </span>
+
                     <img src="{% static "teknosa.png" %}" style="height: 2em">
 
                 </p>
