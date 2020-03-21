@@ -4,3 +4,4 @@
 *.pyc
 /env*
 *.conf
+settings_local.py
