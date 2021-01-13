@@ -24,6 +24,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'local.host',
+    'localhost',
     'ec2-3-18-220-11.us-east-2.compute.amazonaws.com',
     'skorunkac.rekognize.io',
     'skorunkac.yanindayiz.org',

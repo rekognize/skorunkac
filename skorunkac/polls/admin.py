@@ -61,6 +61,8 @@ class AnswerAdmin(admin.ModelAdmin):
         writer.writerow([
             'Oturum adı',
             'Anket Id',
+            'Tarih',
+            'Saat',
             'Soru',
             'Cevap',
             'Cinsiyet',
@@ -68,9 +70,12 @@ class AnswerAdmin(admin.ModelAdmin):
             'Yaş',
         ])
         for answer in qs:
+            t = answer.poll.started
             writer.writerow([
-                answer.poll.session.name,
+                answer.poll.session and answer.poll.session.name or '-',
                 answer.poll.id,
+                t.strftime('%Y-%m-%d'),
+                t.strftime('%H:%M'),
                 answer.question.question,
                 answer.answer,
                 answer.poll.get_gender_display(),
