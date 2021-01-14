@@ -45,6 +45,7 @@ class AnswerAdmin(admin.ModelAdmin):
         #'poll__lifestyle',
         'question'
     ]
+    date_hierarchy = 'poll__started'
 
     def poll(self, answer):
         return answer.poll
@@ -101,6 +102,7 @@ class SessionAdmin(admin.ModelAdmin):
     )
     list_editable = ('active',)
     actions = ['download_qr_code']
+    date_hierarchy = 'created'
 
     def download_qr_code(self, request, queryset):
         for session in queryset:
@@ -167,6 +169,7 @@ class PollAdmin(admin.ModelAdmin):
         #'lifestyle'
     ]
     actions = ['download']
+    date_hierarchy = 'started'
 
     def download(self, request, qs):
         f = StringIO()

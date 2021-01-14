@@ -144,6 +144,7 @@ class Poll(models.Model):
             (5, _('University')),
             (6, _('Masters')),
             (7, _('Doctorate / PhD')),
+            (8, _('Student')),
         ),
     )
     marital_status = models.CharField(

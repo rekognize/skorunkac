@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 14:19+0000\n"
+"POT-Creation-Date: 2021-01-14 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,75 +74,79 @@ msgstr "Yüksek lisans"
 msgid "Doctorate / PhD"
 msgstr "Doktora"
 
-#: skorunkac/polls/models.py:150
+#: skorunkac/polls/models.py:147
+msgid "Student"
+msgstr "Öğrenci"
+
+#: skorunkac/polls/models.py:151
 msgid "Marital Status"
 msgstr "Medeni Durumun"
 
-#: skorunkac/polls/models.py:153
+#: skorunkac/polls/models.py:154
 msgid "Single / Not Married"
 msgstr "Bekar"
 
-#: skorunkac/polls/models.py:154
+#: skorunkac/polls/models.py:155
 msgid "Has a partner / Engaged"
 msgstr "Sözlü / Nişanlı"
 
-#: skorunkac/polls/models.py:155
+#: skorunkac/polls/models.py:156
 msgid "Married"
 msgstr "Evli"
 
-#: skorunkac/polls/models.py:156
+#: skorunkac/polls/models.py:157
 msgid "Widowed"
 msgstr "Dul"
 
-#: skorunkac/polls/models.py:157
+#: skorunkac/polls/models.py:158
 msgid "Divorced"
 msgstr "Boşanmış"
 
-#: skorunkac/polls/models.py:161
+#: skorunkac/polls/models.py:162
 msgid "Where You Grew Up"
 msgstr "Büyüdüğün Yer"
 
-#: skorunkac/polls/models.py:164
+#: skorunkac/polls/models.py:165
 msgid "Village"
 msgstr "Köy"
 
-#: skorunkac/polls/models.py:165
+#: skorunkac/polls/models.py:166
 msgid "Town"
 msgstr "Kasaba / İlçe"
 
-#: skorunkac/polls/models.py:166
+#: skorunkac/polls/models.py:167
 msgid "City"
 msgstr "Şehir"
 
-#: skorunkac/polls/models.py:167
+#: skorunkac/polls/models.py:168
 msgid "Metropolis"
 msgstr "Büyükşehir / Metropol"
 
-#: skorunkac/polls/models.py:171
+#: skorunkac/polls/models.py:172
 msgid "Life style"
 msgstr "Hayat tarzın"
 
-#: skorunkac/polls/models.py:174
+#: skorunkac/polls/models.py:175
 msgid "Modern"
 msgstr "Modern"
 
-#: skorunkac/polls/models.py:175
+#: skorunkac/polls/models.py:176
 msgid "Conservative"
 msgstr "Geleneksel muhafazakar"
 
-#: skorunkac/polls/models.py:176
+#: skorunkac/polls/models.py:177
 msgid "Religious conservative"
 msgstr "Dindar muhafazakar"
 
-#: skorunkac/polls/templates/questions.html:13
+#: skorunkac/polls/templates/questions.html:15
 msgid "You can start now!"
 msgstr "Artık başlayabiliriz!"
 
-#: skorunkac/polls/templates/questions.html:15
+#: skorunkac/polls/templates/questions.html:17
 msgid "Page"
 msgstr "Sayfa"
 
-#: skorunkac/polls/templates/questions.html:21
+#: skorunkac/polls/templates/questions.html:23
 msgid ""
 "\n"
 "                You will find 20 different statements on Gender Equality.\n"
@@ -151,15 +155,17 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Sana Toplumsal Cinsiyet Eşitliği konusunda 20 farklı görüş sunuyoruz."
-"Lütfen her birine ne ölçüde katıldığını ya da katılmadığını, ölçekteki düğmeyi sağa sola kaydırarak belirt."
+"Sana Toplumsal Cinsiyet Eşitliği konusunda 20 farklı görüş sunuyoruz.Lütfen "
+"her birine ne ölçüde katıldığını ya da katılmadığını, ölçekteki düğmeyi sağa "
+"sola kaydırarak belirt."
 
-#: skorunkac/polls/templates/questions.html:30
+#: skorunkac/polls/templates/questions.html:32
 msgid ""
 "The left of the scale shows that you “strongly disagree” and the right of "
 "the scale shows that you “strongly agree”."
 msgstr ""
-"Ölçeğin en solu, görüşe “hiç katılmadığını” en sağı ise “kesinlikle katıldığını” gösterir."
+"Ölçeğin en solu, görüşe “hiç katılmadığını” en sağı ise “kesinlikle "
+"katıldığını” gösterir."
 
 #: skorunkac/polls/templates/result.html:13
 msgid "Thank you for taking the time to complete our test!"
@@ -274,6 +280,6 @@ msgstr ""
 msgid "With the Contribution of"
 msgstr "Teknosa'nın katkılarıyla"
 
-#: skorunkac/polls/templates/start.html:107
+#: skorunkac/polls/templates/start.html:108
 msgid "Start"
 msgstr "Başla"
